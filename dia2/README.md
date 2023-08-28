@@ -215,7 +215,15 @@ Teniendo en cuenta lo anterior:
 2. Dentro de la carpeta asociada a cada equipo hay una plantilla (archivo **README.md**) la cual debera ser modificado por cada equipo teniendo en cuenta el proyecto elegido.
 3. Hacer el diagrama en fritzing y subirlo en la respectiva carpeta.
 4. Revisar los siguientes sitios y elegir minimo tres proyectos que le puedan servir como base para el desarrollo de su proyecto IoT.
-
+   * https://www.sparkfun.com
+   * https://www.hackster.io
+   * https://randomnerdtutorials.com
+   * https://projecthub.arduino.cc/
+   * https://www.adafruit.com/
+   * https://hackaday.com/
+   * https://www.seeedstudio.com/
+   * https://www.luisllamas.es/
+   * https://ubidots.com/
 
 <!--
 BOM templates
