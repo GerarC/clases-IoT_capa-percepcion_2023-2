@@ -128,7 +128,11 @@ De acuerdo al tipo de señal entregada, los sensores se pueden clasificar en dos
 
 ![tabla_protocolos](https://resources.altium.com/sites/default/files/inline-images/Serial%20Communications%20Protocols%20-%20Comparison.jpg)
 
+<!---
+
 Links: https://resources.altium.com/p/comparing-all-serial-communications-protocols
+
+-->
 
 ### Sensores y actuadores disponibles en el laboratorio
 
@@ -136,7 +140,7 @@ El laboratorio cuenta con tres kits de sensores los cules se muestrana continuac
 
 **Grove - Starter Kit v3**
 
-El **Starter Kit** ([link](https://wiki.seeedstudio.com/Grove_Starter_Kit_v3/)) es un kit de prototipado rapido compuesto por varios modulos que permiten la conexión de sensores y actuadores sin necesidad de usar un protoboard.
+El **Grove - Starter Kit** ([link](https://wiki.seeedstudio.com/Grove_Starter_Kit_v3/)) es un kit de prototipado rapido compuesto por varios modulos que permiten la conexión de sensores y actuadores sin necesidad de usar un protoboard.
 
 ![groove_started_kit](https://files.seeedstudio.com/wiki/Grove_Starter_Kit_v3/img/Grove-Starter_Kit_v2_Photo.jpg)
 
@@ -150,9 +154,12 @@ La siguiente tabla muestra una lista de sensores y actuadores disponibles en el 
 
 **37 Sensor Kit - Elegoo**
 
+Este kit de prototipado rapido contiene varios modulos con sensores y actuadores integrados
+
 ![kit_elegoo](sensores_elegoo.jpg)
 
-Este kit de prototipado rapido contiene varios modulos con sensores y actuadores integrados:
+
+A continuación se listan los modulos del kit:
 
 |Tipo|Módulos|
 |---|---|
@@ -161,9 +168,11 @@ Este kit de prototipado rapido contiene varios modulos con sensores y actuadores
 
 **Landzo 37 In 1 Sensors Kit For Arduino**
 
-kit de prototipado rapido generico.
+Kit de prototipado rapido generico.
 
 ![sensores_ladzo](sensores_ladzo.png)
+
+La siguiente tabla muestra cada uno de los modulos del kit:
 
 |Tipo|Módulos|
 |---|---|
@@ -178,7 +187,8 @@ Fritzing es una plataforma para plataforma permitira prototipar hardware en su c
 Para realizar prototipado empleando elementos (de diferentes fabricantes) disponibles en kits de desarrollo puede seguir cualquiera de los dos enlaces que se muestran a continuación: 
 1. **How to Add Components in Fritzing** ([link](https://steemit.com/utopian-io/@thinkingmind/how-to-add-components-in-fritzing)) 
 2. **Fritzing** ([link](https://chem.libretexts.org/Courses/University_of_Arkansas_Little_Rock/IOST_Library/07%3A_Electronics_Book/01%3A_Electric_Fundamentals/05%3A_Fritzing))
-3. agregando los siguientes componentes:
+
+La siguiente tabla muestra enlaces de algunos fabricantes que poseen librerias en fritzing:
 
 |Fabricante|Información|Repositorio|Link descarga|
 |----|----|----|----|
@@ -191,13 +201,45 @@ Para realizar prototipado empleando elementos (de diferentes fabricantes) dispon
 
 ## Actividad de laboratorio
 
+A continuación, se muestra una lista de proyectos con sus respectivos enlaces:
+
+|#|Proyecto|Link|Equipo|
+|---|---|---|---|
+|1|Ultrasonic Security System|https://projecthub.arduino.cc/Krepak/ultrasonic-security-system-a6ea3a||
+|2|Arduino Calculator|https://projecthub.arduino.cc/123samridhgarg/arduino-calculator-bce0df||
+|3|Arduino Solar Tracker|https://projecthub.arduino.cc/Aboubakr_Elhammoumi/arduino-solar-tracker-77347b||
+|4|Line Following Robot|https://projecthub.arduino.cc/lightthedreams/line-following-robot-34b1d3||
+
+Teniendo en cuenta lo anterior:
+1. Cada equipo debera elegir uno de los proyectos y actualizar la columna de tabla anterior con los nombres de los integrantes.
+2. Dentro de la carpeta asociada a cada equipo hay una plantilla (archivo **README.md**) la cual debera ser modificado por cada equipo teniendo en cuenta el proyecto elegido.
+3. Hacer el diagrama en fritzing y subirlo en la respectiva carpeta.
+4. Revisar los siguientes sitios y elegir minimo tres proyectos que le puedan servir como base para el desarrollo de su proyecto IoT.
 
 
-Template: https://wiki.seeedstudio.com/Name_your_website/
+<!--
+BOM templates
+
+* https://docs.google.com/spreadsheets/d/177bLxoFWkBTETf0IBI6YSj0D7ARB_cDI5G91fDpNaeg/edit#gid=0
+* https://docs.google.com/spreadsheets/d/1KeoEjHCCumzPbEeb42TR2nPVxbmhVrfT0AzasvnKFPU/edit#gid=0
+* https://docs.google.com/spreadsheets/d/15ltWMcmYbSrWlz8ajt5TZfj8ZXctMJVueplwYYdZKdc/edit#gid=0
+-->
+
+<!--
+   |#|Proyecto|Link|Equipo|
+   |---|---|---|---|
+   |1|Summer Bridge IoT LW|https://www.hackster.io/walkerlyellatcnm/summer-bridge-iot-lw-f98bf6||
+   |2|Automated Vertical Farming|https://www.hackster.io/go-b/automated-vertical-farming-72737c||
+   |3|IoT Based Greenhouse Monitoring & Control system|https://www.hackster.io/mses-group-5/iot-based-greenhouse-monitoring-control-system-e08347||
+   |4|IOT Based Fertilizer System for Smart Agriculture|https://www.hackster.io/1NextPCB/iot-based-fertilizer-system-for-smart-agriculture-d4ae8b||
+   |5|Smart Garbage Monitoring System Using Arduino 101|https://www.hackster.io/Technovation/smart-garbage-monitoring-system-using-arduino-101-3b813c||
+   |6|Indoor Air Quality Monitoring System|https://www.hackster.io/east-west-university/indoor-air-quality-monitoring-system-5b5244||
+   |7|Future Irrigation System|https://www.hackster.io/mses-inventors/future-irrigation-system-95ed17||
 
 
-## Para profundizar sobre prototipado
+-->   
 
+## Para profundizar
 
 Para profundizar un poco mas en la teoria sobre algunos de los diferentes tipos de sensores, en la siguiente tabla se muestra una lista de compenentes electronicos importantes:
 
@@ -225,21 +267,9 @@ Para profundizar un poco mas en la teoria sobre algunos de los diferentes tipos 
 |Sensor de proximidad|[PIR Motion Sensor](https://learn.adafruit.com/pir-passive-infrared-proximity-motion-sensor)|
 
 
-
-
-Importat libreria en fritzing: 
-* https://learn.adafruit.com/using-the-adafruit-library-with-fritzing/import-the-library-into-fritzing
-* https://learn.sparkfun.com/tutorials/make-your-own-fritzing-parts/all#what-is-fritzing
-* https://github.com/UdeA-IoT/actividad-4
-* 
-
-De donde nos vamos a pegar
-
-
-
-
 ## Referencias
 
+* https://github.com/UdeA-IoT/actividad-4
 * https://randomnerdtutorials.com/
 * https://hci.rwth-aachen.de/arduino
 * https://cdn.sparkfun.com/assets/7/2/a/4/f/SerLCDReactionTimerActivity.pdf
@@ -262,4 +292,12 @@ De donde nos vamos a pegar
 * https://www.weare5vmedia.com/media/communication-protocols-for-an-embedded-engineer-to-know
 * https://embeddedsecurity.io/protocols
 * https://resources.altium.com/p/comparing-all-serial-communications-protocols
+* https://wiki.seeedstudio.com/Name_your_website/
+* https://www.sparkfun.com/news/1529
+* https://learn.sparkfun.com/tutorials/using-github-to-share-with-sparkfun
+* https://learn.sparkfun.com/tutorials/using-github
+* https://makeabilitylab.github.io/physcomp/
+* https://vimeo.com/channels/pcomp
+* https://web.stanford.edu/class/archive/engr/engr40m.1178/
+
 
