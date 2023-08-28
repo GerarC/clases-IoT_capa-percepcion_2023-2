@@ -83,13 +83,93 @@ La siguiente tabla resume la función principal algunos de estos:
 
 Los sensores y actuadores tienen como papel principal  permitir la interación del dispositivo IoT con el medio ambiente.
 
-### Sensores y actuadores
+### Clasificación de los sensores
 
-...
+Existen diferentes tipos de sensores que permiten medir diferentes variables, desde propiedades naturales tales como la temperatura del aire a interacciones fisicas como el movimiento.
+Algunos tipos de sensores existentes son:
+* **Sensores de temperatura**: Permiten medir la temperatura del aire o el medio en el cual se encuentran inmersos. A veces suelen venir cominados con sensores de humedad y presión en un mismo modulo.
+* **Botones**: Permiten sensar cuando estos son presionados
+* **Sensores de luz**: Estos detectan niveles de luz. Tambien permiten medir distintos tipos de luz (de colores especificos, ultravioleta, infraroja o luz visible en general).
+* **Acelerometros**: Permiten medir el movimiento en multiples direcciones.
+* **Microfonos**: estos permiten detectar sonidos.
+
+La siguiente tabla muestra una lista mas amplia de algunos tipos de sensores:
+
+![tipos_sensores](tipos-sensores_monk.jpg)
+
+### Tipos de sensores
+
+De acuerdo al tipo de señal entregada, los sensores se pueden clasificar en dos tipos basicos:
+* **Sensores Analógicos**: Son el tipo de sensores mas basicos que existen. Estos, son alimentados con voltaje (voltaje de alimentación) desde el dispositivo IoT y devolvuelven a este, para su lectura, un voltaje cuya variación depende de la variable medida.
+  
+  ![sensor_analogo](https://github.com/microsoft/IoT-For-Beginners/raw/main/images/potentiometer.png)
+
+  Debido a que los dispositivos IoT son digitales, los valores obtenidos al usar sensores analogos deben ser convertidos a una señal digital antes de ser procesados de modo que muchos dispositivos IoT tienen Conversores analogo a digital (ADCs) para convertir señales analogas a representaciones digitales de su valor.
+
+
+* **Sensores Digitales**: Los sensores digitales detectan cambios de voltaje que solo pueden tomar dos posibles valores (alto y bajo).
+  
+  El tipo mas simple de sensor de este tipo es un **boton** o **switch**, el cual es un sensor con dos estados **ON** y **OFF**.
+
+  ![sensor_digital](https://github.com/microsoft/IoT-For-Beginners/raw/main/images/button.png)
+
+  Existen otros tipos de sensores digitales mas avanzados los cuales permiten sensar variables analógicas gracias a que possen el hardware necesario para poder procesar la señal leida y enviar su valor como datos digitales mediante el uso de un protocolo de comunicación.
+
+  ![sensor_digital_avanzado](https://github.com/microsoft/IoT-For-Beginners/raw/main/images/temperature-as-digital.png)
+
 
 ### Comunicación entre sensores
 
-...
+* 1-Wire
+* RS232
+* I2C
+* SPI
+* USB
+
+![tabla_protocolos](https://resources.altium.com/sites/default/files/inline-images/Serial%20Communications%20Protocols%20-%20Comparison.jpg)
+
+Links: https://resources.altium.com/p/comparing-all-serial-communications-protocols
+
+### Sensores y actuadores disponibles en el laboratorio
+
+El laboratorio cuenta con tres kits de sensores los cules se muestrana continuación:
+
+**Grove - Starter Kit v3**
+
+El **Starter Kit** ([link](https://wiki.seeedstudio.com/Grove_Starter_Kit_v3/)) es un kit de prototipado rapido compuesto por varios modulos que permiten la conexión de sensores y actuadores sin necesidad de usar un protoboard.
+
+![groove_started_kit](https://files.seeedstudio.com/wiki/Grove_Starter_Kit_v3/img/Grove-Starter_Kit_v2_Photo.jpg)
+
+La siguiente tabla muestra una lista de sensores y actuadores disponibles en el Kit:
+
+|Tipo|Módulos|
+|---|---|
+|Sensor|<li> Grove - Sound Sensor <li> Grove - Touch Sensor <li>  Grove - Rotary Angle Sensor <li>  Grove – Temperature Sensor|
+|Actuador|<li> Grove - LCD RGB Backlight <li>  Grove – Relay <li>  Grove – Buzzer <li>  Grove - LED <li> Grove - Light Sensor|
+
+
+**37 Sensor Kit - Elegoo**
+
+![kit_elegoo](sensores_elegoo.jpg)
+
+Este kit de prototipado rapido contiene varios modulos con sensores y actuadores integrados:
+
+|Tipo|Módulos|
+|---|---|
+|Sensor|<li> DHT11 Temperature and Humidity Module <li> DS18B20 Temperature Sensor Module <li> Button switch module <li> Tilt Switch module <li> Photo Interrupter Module <li> Light Dependent Resistor Module <li> Large Microphone Module <li> Small microphone module <li> Reed Switch Module <li> digital temperature sensor module <li> Linear Magnetic Hall Sensor <li> Flame Sensor Module <li> Touch Sensor <li> Joystick Module <li> Line Tracking Module <li> Obstacle Avoidance Sensor <li> Rotary Encode Module <li> Ultrasonic Sensor Module <li> MPU 6050 Module <li> HC SR501 PIR Sensor <li> Water Level Detection Sensor Module <li> DS1307 Serial Real Time Clock <li> Keypad Module <li> IR Receiver Module|
+|Actuador|<li> Two Color LED Module (5mm) <li> IR Transmitter Module <li> seven Color flash Module <li> Passive Buzzer <li> Laser Module <li> RGB LED Module <li> SMD RGB LED Module <li> Seven Color flash Module <li> Relay module <li> LCD display|
+
+**Landzo 37 In 1 Sensors Kit For Arduino**
+
+kit de prototipado rapido generico.
+
+![sensores_ladzo](sensores_ladzo.png)
+
+|Tipo|Módulos|
+|---|---|
+|Sensor|<li> KY-023 Joystick module <li> KY-026 Flame Sensor Module <li> KY-039 Heartbeat Sensor module <li> KY-027 2PCS Light Cup module <li> KY-003 Hall Magnetic Sensor <li> KY-024 Linear Hall Sensor <li> KY-017 Mercury Tilt Switch <li> KY-001 18B20 Temperature Sensor <li> KY-037 Big Sound Sensor <li> KY-036 Touch Sensor <li> KY-020 Ball Switch <li> KY-013 Analog Temperature Sensor <li> KY-038 Small Sound Sensor <li> KY-028 Digital Temperature Sensor <li> KY-004 Button <li> KY-018 Photoresistor <li> KY-033 Tracking Sensor <li> KY-025 Reed Switch <li> KY-002 Shock Sensor <li> KY-015 Temperature and Humidity Sensor <li> KY-022 IR Receiver <li> KY-032 Avoidance Sensor <li> KY-021 Mini Reed Switch <li> KY-040 Rotary Encoder <li> KY-035 Analog Hall Sensor <li> KY-031 - Tap Module <li> KY-010 - Light blocking|
+|Actuador|<li> KY-016 RGB LED Module <li> KY-019 Relay Module <li> KY-009 SMD RGB LED <li> KY-034 7 Color Flash LED <li> KY-011 Two Color LED <li> KY-008 Laser Emitter <li> KY-029 Mini Two-color LED <li> KY-005 IR Emitter <li> KY-012 Buzzer <li> KY-006 Passive Buzzer|
+
 
 ## Prototipado básico usando fritzing
 
@@ -104,11 +184,16 @@ Para realizar prototipado empleando elementos (de diferentes fabricantes) dispon
 |----|----|----|----|
 |Adafruit|<li>**Using the Adafruit Library with Fritzing** ([link](https://learn.adafruit.com/using-the-adafruit-library-with-fritzing))|https://github.com/adafruit/Fritzing-Library|[descarga](https://github.com/adafruit/Fritzing-Library/archive/master.zip)|
 |Sparkfun|<li>**Make Your Own Fritzing Parts** ([link](https://learn.sparkfun.com/tutorials/make-your-own-fritzing-parts)) <li> **Fritzing!** ([link](https://www.sparkfun.com/news/663))|https://github.com/sparkfun/Fritzing_Parts||
+|Seeed Studio||https://github.com/Seeed-Studio/fritzing_parts|[seeed_fritzing_parts.fzbz](https://github.com/Seeed-Studio/fritzing_parts/blob/master/seeed_fritzing_parts.fzbz)|
 |Elegoo||https://github.com/marcinwisniowski/ElegooFritzingBin|[Elegoo-0.6.3.fzbz](https://github.com/marcinwisniowski/ElegooFritzingBin/releases/download/0.6.3/Elegoo-0.6.3.fzbz)|
 |NodeMCU y otros componentes||https://github.com/AchimPieters/Fritzing-Custom-Parts|[](https://github.com/AchimPieters/Fritzing-Custom-Parts/releases/download/0.0.4/Fritzing.parts.rar)|
 |ESP32 NodeMCU|<li>**ESP32S-HiLetgo Dev Boad with Pinout Template**<li> ([link](https://forum.fritzing.org/t/esp32s-hiletgo-dev-boad-with-pinout-template/5357))||[ESP32S_HiLetgo.fzpz](https://forum.fritzing.org/uploads/default/original/2X/1/1c6c1b0e5bff03730a40b696b354783432fbb506.fzpz)|
 
 ## Actividad de laboratorio
+
+
+
+Template: https://wiki.seeedstudio.com/Name_your_website/
 
 
 ## Para profundizar sobre prototipado
@@ -169,4 +254,12 @@ De donde nos vamos a pegar
 * https://www.instructables.com/Fritzing-A-Tutorial/
 * https://forum.fritzing.org/t/fritzing-part-of-an-esp32/5355/5
 * https://www.studiopieters.nl/homekit-accessoires/
+* https://en.wikipedia.org/wiki/Open-design_movement
+* https://www.embedded.com/serial-protocols-compared/
+* https://circuitdigest.com/tutorial/serial-communication-protocols
+* https://www.totalphase.com/blog/2017/08/serial-communication-protocols-the-basics/
+* https://www.linkedin.com/pulse/communication-protocols-embedded-system-keroloes-girgis
+* https://www.weare5vmedia.com/media/communication-protocols-for-an-embedded-engineer-to-know
+* https://embeddedsecurity.io/protocols
+* https://resources.altium.com/p/comparing-all-serial-communications-protocols
 
