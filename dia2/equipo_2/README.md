@@ -2,9 +2,9 @@
 
 ## Integrantes
 
-* Integrante 1
-* Integrante 2
-* Integrante 3
+* Andres Felipe Vasquez Ramirez
+* David Mejia Restrepo
+* Daniel Ramirez Cardenas
 
 ## Breve descripción del proyecto
 
