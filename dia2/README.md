@@ -1,4 +1,4 @@
-# Capa de percepción - clase 2
+# Capa de percepción - Elementos de laboratorio
 
 > ## Objetivos
 > * Comprender los conceptos básicos para realizar prototipado.
