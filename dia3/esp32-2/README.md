@@ -1,0 +1,3 @@
+# Ejemplo 2
+
+Archivo frizting...
