@@ -427,6 +427,7 @@ Para los siguientes circuitos realizar lo siguiente:
 ## Referencias
 
 Para ir mas alla puede consultar las siguientes referencias:
+* http://www.ee.ic.ac.uk/pcheung/teaching/DE1_EE/Lectures/
 * https://randomnerdtutorials.com/projects-esp32/
 * https://esphome.io/components/esp32.html
 * https://www.espressif.com/en
