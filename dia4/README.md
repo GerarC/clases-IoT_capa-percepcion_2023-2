@@ -10,6 +10,11 @@
 * La mayor parte de esta clase tomará como base la lección 2 A deeper dive into IoT (lección 2) del curso IoT for Beginners ([link](https://github.com/microsoft/IoT-For-Beginners)).
 * También mucha de la información se tomó de la pagina: https://randomnerdtutorials.com/ 
 * ESP32 Arduino Core’s documentation ([link](https://espressif-docs.readthedocs-hosted.com/projects/arduino-esp32/en/latest/))
+* Tutorial **Serial Communication** de Sparkfun ([link](https://learn.sparkfun.com/tutorials/serial-communication/serial-intro)).
+* Tutorial **Circuit Playground Express Serial Communications** de Adafruit ([link](https://learn.adafruit.com/circuit-playground-express-serial-communications))
+* Tutorial **Arduino Lesson 5. The Serial Monitor** de Adafruit ([link](https://learn.adafruit.com/adafruit-arduino-lesson-5-the-serial-monitor/overview))
+* 
+* 
 * Páginas de referencia fundamentales (para ver lo que se puede hacer): 
   * https://randomnerdtutorials.com/
   * https://www.adafruit.com/
@@ -168,7 +173,7 @@ Para comprender esto en el siguiente [directorio](serial-esp32/) explicara paso 
 
 ## Para conocer mas
 
-Para conocer mas sobre la comunicación serial, le sugerimos que de un vistazo en el tutorial **Serial Communication** de Sparkfun ([link](https://learn.sparkfun.com/tutorials/serial-communication/serial-intro)).
+
 
 ## Referencias
 
