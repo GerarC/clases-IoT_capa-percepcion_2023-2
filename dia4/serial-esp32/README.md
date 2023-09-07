@@ -6,7 +6,7 @@ El objetivo de esta sesión es explicar paso a paso como se construye una aplica
 
 Desarrolle una aplicación que permita encender y apagar un Led para el siguiente hardware:
 
-![hardware_serial](../hardware_bb.png)
+![hardware_serial](hardware_bb.png)
 
 La aplicación se conectara mediante el serial enviando dos comandos basicos para modificar el estado del led:
 
@@ -15,7 +15,7 @@ La aplicación se conectara mediante el serial enviando dos comandos basicos par
 
 El resultado final (si todo sale bien) de la aplicación de control es el siguiente:
 
-![interfaz_grafica](../ui_python.png)
+![interfaz_grafica](ui_python.png)
 
 ## Implementación paso a paso
 
