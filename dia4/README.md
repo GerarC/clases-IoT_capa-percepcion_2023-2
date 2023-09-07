@@ -168,7 +168,6 @@ Para comprender esto en el siguiente [directorio](serial-esp32/) explicara paso 
 ![comunicacion_serial](comunicacion_serial.png)
 
 
-
 ## Para conocer mas
 
 Para conocer mas sobre la comunicación serial, le sugerimos que de un vistazo en el tutorial **Serial Communication** de Sparkfun ([link](https://learn.sparkfun.com/tutorials/serial-communication/serial-intro)).
