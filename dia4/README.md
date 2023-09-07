@@ -70,14 +70,6 @@ A continuación se describen las principales del API empleadas mas comunmente:
 |```Serial.available()```|Obtiene el número de bytes (caracteres) disponibles por leer en el puerto serial. Estos son datos que ya han llegado y han sido almacenados en el buffer de recepción serial (el cual almacena 64 bytes).<br><br>**Sintaxis**:<br>```Serial.available()```<br><br>**Valores retornados**: Número de bytes disponibles para leer.|
 |```Serial.read()```|Lee un dato que entra a través del serial.<br><br>**Sintaxis**:<br>```Serial.read()```<br><br>**Valores retornados**: Primer byte de los datos seriales disponibles (o ```-1``` si no hay datos disponibles). El tipo de dato leído es ```int```.|
 
-
-
-
-
-
-
-
-
 ### Funciones serial
 
 En el link [arduino programming notebook](http://engineering.nyu.edu/gk12/amps-cbri/pdf/ArduinoBooks/Arduino%20Programming%20Notebook.pdf) se encuentra una descripción muy completa de las principales funciones empleadas cuando se trabaja con arduino, sin embargo, en la siguiente tabla se hace un poco de enfasis en las que se usan comunmente en la comunicación serial. 
@@ -166,6 +158,12 @@ Por medio de operaciones de lectura y escritura en el puerto serial, es posible 
 Para comprender esto en el siguiente [directorio](serial-esp32/) explicara paso a paso una aplicación mediante la cual se enviaran comandos por serial desde un el PC al ESP32 para una tarea sencilla como prender y apagar un led.
 
 ![comunicacion_serial](comunicacion_serial.png)
+
+## Practicando lo aprendido
+
+1. Analizar como se lleva a cabo el procedimiento de descargar una aplicación usando **Platformio**. ([link](uso_platformio/README.md)) 
+2. Estudiar y comprender como se lleva a cabo el proceso de debug mediante el puerto serial ([link](debug_esp32/README.md)).
+3. Estudiar y replicar el proceso que se lleva a cabo para diseñar una aplicación que conecte un computador con el puerto serial ([link](serial-esp32/README.md)).
 
 
 ## Para conocer mas

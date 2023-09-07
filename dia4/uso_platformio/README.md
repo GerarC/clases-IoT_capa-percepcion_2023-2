@@ -12,7 +12,7 @@ Cuya conexion es:
 
 ## Software
 
-El codigo se muestra a continuación: 
+El codigo ([simulación online](https://wokwi.com/projects/375183687075033089)) se muestra a continuación: 
 
 ```cpp
 #include <Arduino.h>

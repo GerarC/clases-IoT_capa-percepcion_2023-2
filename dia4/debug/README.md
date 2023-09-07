@@ -1,3 +1,0 @@
-# Trabajando con platformio
-
-
