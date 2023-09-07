@@ -13,8 +13,6 @@
 * Tutorial **Serial Communication** de Sparkfun ([link](https://learn.sparkfun.com/tutorials/serial-communication/serial-intro)).
 * Tutorial **Circuit Playground Express Serial Communications** de Adafruit ([link](https://learn.adafruit.com/circuit-playground-express-serial-communications))
 * Tutorial **Arduino Lesson 5. The Serial Monitor** de Adafruit ([link](https://learn.adafruit.com/adafruit-arduino-lesson-5-the-serial-monitor/overview))
-* 
-* 
 * Páginas de referencia fundamentales (para ver lo que se puede hacer): 
   * https://randomnerdtutorials.com/
   * https://www.adafruit.com/
@@ -66,18 +64,7 @@ En el API de Arduino ([link](https://www.arduino.cc/reference/en/)) se encuentra
 
 ![API_Arduino](API_serial.png)
 
-A continuación se describen las principales del API empleadas mas comunmente:
-
-|Función|Descripción|
-|---|---|
-|```Serial.begin()```|Configura la velocidad de transmisión serial (bits por segundo = baud).<br><br>**Sintaxis**:<br>```Serial.begin(speed)``` <br><br>**Parámetros**: <ul><li>**```speed```**: Velocidad de transmisión</ul>|
-|```Serial.print()```|Imprime los datos del puerto serial en formato ASCII.<br><br>**Sintaxis**:<br>```Serial.print(val)```<br>```Serial.print(val, format)```<br><br>**Parámetros**: <ul><li>**```val```**: Valor a imprimir. El valor puede ser de cualquier tipo.<li>**```format```**: Formato de representación del ASCII (```DEC```, ```HEX```, ```OCT``` o ```BIN```).</ul>|
-|```Serial.available()```|Obtiene el número de bytes (caracteres) disponibles por leer en el puerto serial. Estos son datos que ya han llegado y han sido almacenados en el buffer de recepción serial (el cual almacena 64 bytes).<br><br>**Sintaxis**:<br>```Serial.available()```<br><br>**Valores retornados**: Número de bytes disponibles para leer.|
-|```Serial.read()```|Lee un dato que entra a través del serial.<br><br>**Sintaxis**:<br>```Serial.read()```<br><br>**Valores retornados**: Primer byte de los datos seriales disponibles (o ```-1``` si no hay datos disponibles). El tipo de dato leído es ```int```.|
-
-### Funciones serial
-
-En el link [arduino programming notebook](http://engineering.nyu.edu/gk12/amps-cbri/pdf/ArduinoBooks/Arduino%20Programming%20Notebook.pdf) se encuentra una descripción muy completa de las principales funciones empleadas cuando se trabaja con arduino, sin embargo, en la siguiente tabla se hace un poco de enfasis en las que se usan comunmente en la comunicación serial. 
+A continuación se describen las principales funciones del API empleadas mas comunmente para comunicación serial:
 
 |Función|Descripción|
 |---|---|
