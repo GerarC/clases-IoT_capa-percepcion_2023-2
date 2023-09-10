@@ -43,7 +43,13 @@ En la siguiente figura se muestra un ejemplo en el cual se transfieren dos trama
 
 ![trama_datos_serial](trama_datos_serial.png)
 
-Para la transferencia de la trama (transmición o recepción) es necesaria una señal de reloj para que sincroniza la velociada a la cual se transmite (o recive) la trama, y como el objetivo es permitir la comunicacion full-duplex entre los dispositivos necesarios es necesario tener dos lineas, una para transmición y otra para recepción:
+---
+
+**Nota:** Esta parte debe ser corregida (concepto malo)
+
+Para la transferencia de la trama (transmición o recepción) es necesaria una señal de reloj para que sincroniza la velociada a la cual se transmite (o recive) la trama, y como el objetivo es permitir la comunicacion full-duplex entre los dispositivos necesarios es necesario tener dos lineas, una para transmisión y otra para recepción:
+
+---
 
 ![pineas_serial](pines_serial.png)
 
