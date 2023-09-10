@@ -66,16 +66,36 @@ La siguiente tabla resume principales ventajas y desventajas de este protocolo:
 
 ## Pines I2C
 
+Antes de empezar a trabajar con dispositivos que soportan comunicación I2C, es necesario revisar cuales de los pines multiproposito existentes en cada plataforma, implementan el bus I2C. A continuación, se hará la revisión para algunas de las plataformas disponibles en el laboratorio, el procedimiento en general, aplica para otras plataformas.
+
 ### ESP32
+
+La siguiente figura muestra el diagrama de pines para el NodeMCU-32S:
 
 ![pines-esp32](nodemcu_32s_pin.png)
 
-Al consultar la tabla de definición de pines del datasheet del Nodemcu-32s ([link](https://docs.ai-thinker.com/_media/esp32/docs/nodemcu-32s_product_specification.pdf)), los pines de interes seran:
+Al consultar la tabla de definición de pines del datasheet del Nodemcu-32s ([link](https://docs.ai-thinker.com/_media/esp32/docs/nodemcu-32s_product_specification.pdf)), los pines que se usaran para implementar el bus I2C seran:
 
 |No.| Pin Name |Functional Description|I2C Pin|
 |---|---|---|---|
 |33 |```P21```|```GPIO21```, ```VSPIHD```, ```EMAC_TX_EN```|```SDA```|
 |36 |```P22```|```GPIO22```, ```VSPIWP```, ```U0RTS```, ```EMAC_TXD1```|```SCL```|
+
+Una vez identificados lo pines de interes, el siguiente paso consistirá en consultar si el API **Arduino-ESP32** ([link](https://espressif-docs.readthedocs-hosted.com/projects/arduino-esp32/en/latest/index.html)) tiene soporte para el protocolo I2C, para ello se consulta cuales de los perifericos del ESP32 son soportados usando el API Arduino en la seccion **Libraries** ([link](https://espressif-docs.readthedocs-hosted.com/projects/arduino-esp32/en/latest/libraries.html)):
+
+![esp32-i2c](esp32-i2c-API.png)
+
+Como se puede ver en la figura anterior, afortunadamente hay soporte de este protocolo, de modo que no nos tendremos que preocupar por la implementación de los detalles de bajo nivel (en otras palabras, no tendremos que implementar los drivers del protocolo I2C). Asi, el trabajo solo se reduce al uso de funciones de libreria segun las necesidades que se tengan para la aplicación. La documentación para el uso del protocolo I2C para el ESP32 se encuentra en la libreria **I2C** ([link](https://espressif-docs.readthedocs-hosted.com/projects/arduino-esp32/en/latest/api/i2c.html)). 
+
+Tal y como se describe en la pagina la libreria **ESP32 I2C** esta basada en la libreria **Wire** de Arduino ([link](https://www.arduino.cc/reference/en/language/functions/communication/wire/)) e implementa algunas APIS mas, esto hace que la similitud entre los programas escritos para manejar el I2C para el ESP32 sea bastante similar a los que se escriben para el arduino.
+
+Finalmente, la conexión del ESP32 con otros dispositivos I2C, depende del rol que este tome. Si este actua como **maestro**, la conexión es similar a la siguiente:
+
+![esp32_maestro](arduino_i2c_master.png)
+
+Por el contrario, si este actua como **esclavo**, la conexión se muestra a continuación:
+
+![esp32_slave](arduino_i2c_slave.png)
 
 ### Arduino
 
@@ -119,22 +139,14 @@ En construcción...
 * https://learn.adafruit.com/i2c-addresses/the-list
 * https://github.com/adafruit/I2C_Addresses/
 * https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/i2c.html
-* 
+* https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/peripherals/i2c.html
+* https://espressif-docs.readthedocs-hosted.com/projects/arduino-esp32/en/latest/libraries.html
 
 
 
 it is a bus and can support multiple devices connected to the
 same two wires. It also can run at either 5 V or 3.3 V.
 
-I2C devices are either masters or slaves, and there can be more than one master
-device per bus. In fact, devices are allowed to change roles, although this is not usually
-done. It is common for microcontrollers to have an I2C interface and use it to
-exchange data between microcontrollers.
-The serial clock line (SCL) is a clock, and the serial data line (SDA) carries the
-data. The timing of these pins is shown in Fig. 13.33. The master supplies the SCL
 
-In fact, devices are allowed to change roles, although this is not usually
-done. It is common for microcontrollers to have an I2C interface and use it to
-exchange data between microcontrollers.
 
 #include <Wire.h>
