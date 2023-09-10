@@ -86,9 +86,18 @@ Al consultar la tabla de definición de pines del datasheet del Nodemcu-32s ([li
 |```18```|```SDA``` |```D18/SDA```, ```PC4```, ```SDA```|
 |```19```|```SCL``` |```D19/SCL```, ```PC5```, ```SCL```|
 
-### Sensores Elegoo
+### Sensores 
 
-En construcción...
+* **37 Sensor Kit - Elegoo**:
+  * GY-521SENSOR (Lesson 30 GY-521 Module)
+  * DS1307 (Lesson 33 Real Time Clock Module)
+
+* **Grove - Starter Kit v3**:
+  * Grove - LCD RGB Backlight
+
+* **Landzo 37 In 1 Sensors Kit For Arduino**:
+  * https://github.com/josejuansanchez/37-in-1-arduino-sensor-kit
+  * https://wiki.keyestudio.com/Ks0068_keyestudio_37_in_1_Sensor_Kit_for_Arduino_Starters
 
 ## Libreria Wire
 
