@@ -99,29 +99,55 @@ Por el contrario, si este actua como **esclavo**, la conexión se muestra a cont
 
 ### Arduino
 
+A continuación se muestra el mapa de pines para el Arduino UNO con el objetivo de determinar cuales son los pines en los que se implementa el bus I2C:
+
 ![pines-arduino](Pinout-UNOrev3_latest.png)
+
+Los pines destinados al bus I2C se pueden conocer al consultar el datasheet del Arduino UNO ([link](https://docs.arduino.cc/resources/datasheets/A000066-datasheet.pdf)). La siguiente tabla muestra dicho resultado:  
 
 |No.| Pin Name |Functional Description|
 |---|---|---|
 |```18```|```SDA``` |```D18/SDA```, ```PC4```, ```SDA```|
 |```19```|```SCL``` |```D19/SCL```, ```PC5```, ```SCL```|
 
-### Sensores 
+Para comunicar el arduino con dispositivos I2C, se emplea la libreria **Wire** cuya documentación se encuentra en el siguiente [link](https://www.arduino.cc/reference/en/language/functions/communication/wire/)
 
-* **37 Sensor Kit - Elegoo**:
-  * GY-521SENSOR (Lesson 30 GY-521 Module)
-  * DS1307 (Lesson 33 Real Time Clock Module)
+Para mas información sobre como trabajar con el protocolo I2C del arduino consulte la página **A Guide to Arduino & the I2C Protocol (Two Wire)** ([link](https://docs.arduino.cc/learn/communication/wire))
 
-* **Grove - Starter Kit v3**:
-  * Grove - LCD RGB Backlight
+Un dispositivo I2C tipico es una memoria EEPROM, en la pagina de Sparkfun: **Reading and Writing Serial EEPROMs** ([link](https://learn.sparkfun.com/tutorials/reading-and-writing-serial-eeproms/all)) se muestra un caso de uso tipico que ilustra la comunicación del Arduino con la memoria:
 
-* **Landzo 37 In 1 Sensors Kit For Arduino**:
-  * https://github.com/josejuansanchez/37-in-1-arduino-sensor-kit
-  * https://wiki.keyestudio.com/Ks0068_keyestudio_37_in_1_Sensor_Kit_for_Arduino_Starters
+![eeprom_wiring](eeprom_wiring.png)
+
+
+### Dispositivos I2C
+
+En el laboratorio se encuentran los siguientes dispositivos I2C:
+
+|N°|Dispositivo|Kit|Observaciones|
+|---|---|---|---|
+|1|DS1307 Serial Real Time Clock|37 Sensor Kit - Elegoo||
+|2|GY-521 Module|37 Sensor Kit - Elegoo|No se encontró|
+|3|Grove - LCD RGB Backlight|Grove - Starter Kit||
 
 ## Libreria Wire
 
-En construcción...
+A continuación se resumen las principales funciones de la libreria ```Wire.h``` ([link](https://www.arduino.cc/reference/en/))
+
+|Función|Descripción|
+|---|---|
+|```begin()```|Unirse como maestro|
+|```begin(addr)```|Unirse como esclavo usando la dirección ```addr```|
+|```requestFrom(address, count)```||
+|```beginTransmission(addr)```|Paso 1|
+|```send(byte)```|Paso 2|
+|```send(char * string)```||
+|```send(byte * data, size)```||
+|```endTransmission()```|Paso 3|
+|```int available()```|Numero de bytes disponibles|
+|```onReceive(handler)```||
+|```onRequest(handler)```||
+
+
 
 ## Referencias
 
@@ -141,12 +167,6 @@ En construcción...
 * https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/peripherals/i2c.html
 * https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/peripherals/i2c.html
 * https://espressif-docs.readthedocs-hosted.com/projects/arduino-esp32/en/latest/libraries.html
-
-
-
-it is a bus and can support multiple devices connected to the
-same two wires. It also can run at either 5 V or 3.3 V.
-
-
-
-#include <Wire.h>
+* https://www.arduino.cc/education/courses/
+* https://www.arduino.cc/education/
+* https://learn.adafruit.com/adafruit-24lc32-i2c-eeprom-breakout-32kbit-4-kb/arduino
