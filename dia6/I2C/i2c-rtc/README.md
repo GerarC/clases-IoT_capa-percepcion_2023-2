@@ -166,6 +166,8 @@ La siguiente figura muestra la salida del programa en el monitor serial.
 
 ![rtc_output](rtc_output.png)
 
-Referencias
+
+## Referencias
 * https://randomnerdtutorials.com/guide-for-real-time-clock-rtc-module-with-arduino-ds1307-and-ds3231/
-* 
+
+
