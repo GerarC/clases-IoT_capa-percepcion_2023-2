@@ -32,3 +32,7 @@ Exiten tutoriales en internet que explican muy bien como importar librerias port
 * https://learn.adafruit.com/arduino-tips-tricks-and-techniques/arduino-libraries
 * https://docs.arduino.cc/software/ide-v1/tutorials/installing-libraries
 * https://docs.arduino.cc/software/ide-v2/tutorials/ide-v2-installing-a-library
+* https://github.com/UdeA-IoT/actividad-4
+* https://www.arduino.cc/reference/en/libraries/
+* https://esp32io.com/tutorials/esp32-keypad
+* https://deepbluembedded.com/esp32-keypad-lcd-example-arduino/
