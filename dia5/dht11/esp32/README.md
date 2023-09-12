@@ -125,6 +125,13 @@ void loop() {
 }
 ```
 
+#### Test de la aplicación
+
+Cuando se prueba la aplicación, la salida tiene la siguiente forma:
+
+![3](esp32_dht11-serial.png)
+
+
 ## Otros recursos
 
 La simulación del programa descargado se encuentra en ([link](https://wokwi.com/projects/357776308749643777))
