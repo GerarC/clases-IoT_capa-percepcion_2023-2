@@ -24,6 +24,17 @@ Exiten tutoriales en internet que explican muy bien como importar librerias port
 7. **Getting Started with VS Code and PlatformIO IDE for ESP32 and ESP8266 (Windows, Mac OS X, Linux Ubuntu)** de randomnerdtutorials ([link](https://randomnerdtutorials.com/vs-code-platformio-ide-esp32-esp8266-arduino/))
 8. **Library Management** de Platformio ([link](https://docs.platformio.org/en/latest/librarymanager/index.html))
 
+## Librerias
+
+Las librerias portadas para el API de arduino se encuentran en la lista mostrada en el siguiente [link](https://www.arduino.cc/reference/en/libraries/)
+
+![librerias](librerias_arduino.png)
+
+## Actividad en clase
+
+1. Estudiar el ejemplo donde se muestra la interacción entre el ESP32 y un teclado matricial ([link](./keypad/esp32/README.md)).
+2. Estudiar el ejemplo en el que se muestra la medición de temperatura y humedad del sensor DHT11 y el ESP32. Adaptar este ejemplo usando platformio ([link](./dht11/esp32/README.md)).
+3. Estudiar el manejo del LCD ([link](./lcd/README.md))
 
 ## Referencias
 
