@@ -305,7 +305,6 @@ Las respuestas de la API REST son respuestas HTTP que comunica los resultados de
 
   **Procedimiento**: El procedimiento se describe en el [ejemplo 6](./ejemplo6/README.md)
 
-
 ## Enlaces
 
 * https://docs.espressif.com/projects/esp-idf/en/latest/esp32/
@@ -330,3 +329,4 @@ Las respuestas de la API REST son respuestas HTTP que comunica los resultados de
 * https://www.networkworld.com/article/3133738/dweetio-a-simple-effective-messaging-service-for-the-internet-of-things.html
 * https://www.learnrobotics.org/blog/nodemcu-dweet-io-freeboard-io-tutorial-for-iot/
 * https://docs.iotify.io/temp/untitled-4
+* https://github.com/Freeboard/freeboard

@@ -142,20 +142,27 @@ Note del codigo que el nombre de la cosa en este caso es: ```node001```
 
 ### Test
 
-Vaya a [https://dweet.io/](https://dweet.io/) y explore el API:
+Vaya a [https://dweet.io/](https://dweet.io/) y explore el API, para ello siga el link https://dweet.io/play/
 
 ![api_dweet](API_dweet.png)
 
-Luego registre el dispositivo 
-https://dweet.io/follow
+
+<!--
+
+Luego registre el dispositivo https://dweet.io/follow
 
 https://dweet.io/dweet/for/my-thing-name?hello=world
 
 https://dweet.io/dweet/for/my-thing-name?hello=world
 
 String url = "/dweet/for/" + thing_name + "?value=" + String(sensorValue);
+-->
 
-Registre la cosa:
+Registre la cosa dando click en el boton **POST** tal y como se muestra a continuación:
+
+![dweet1_reg](dweet1_reg.png)
+
+En los campos que se despliegan coloque el nombre que le pondra a la cosa, en este ejemplo se uso **node001** tal y como se mostro en la siguiente figura:
 
 ![dweet1](dweet1.png)
 
@@ -167,7 +174,7 @@ Para ver los datos que envia la cosa vaya en el navegador a https://dweet.io/fol
 
 ![dweet3](dweet3.png)
 
-Usando el API, coloque manualmente un valor cualquiera usando el par ```{KEY: VALUE}```, en este caso ```KEY``` es ```"value"``` y ````VALUE``` es ```0```. De este modo los parametros seran ```{"value": 0}``` tal y como se muestra a continuación:
+Usando el API, coloque manualmente un valor cualquiera usando el par ```{KEY: VALUE}```, en este caso ```KEY``` es ```"value"``` y ```VALUE``` es ```0```. De este modo los parametros seran ```{"value": 0}``` tal y como se muestra a continuación:
 
 ![dweet4](dweet4.png)
 
@@ -180,6 +187,12 @@ Proceda a descargar en la ESP32 el código; este despues de ponerse a funcionar 
 Notese que el ESP32 esta haciendo peticiones para colocar los datos en **dweet.io**, esto se puede corroborar cargango la pagina de la cosa https://dweet.io/follow/node001. La siguiente figura muestra la grafica en el tiempo de los valores enviados:
 
 ![dweet5](dweet5.png)
+
+## Actividad
+
+Explore la creación de una dashboard que se asocie a la información que usted esta enviando en este ejemplo precionando el boton **Create a Custom DashBoard**.
+
+![dweet8](dweet8.png)
 
 ## Enlaces
 
