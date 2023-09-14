@@ -2,11 +2,22 @@
 
 Explorar la plataforma https://dweet.io/ enviando a esta un valor analogico.
 
+Es importante tener en cuenta la siguiente información sobre obtenida de la documentación: 
+
+> ADC2 pins cannot be used when Wi-Fi is used. So, if you’re using Wi-Fi and you’re having trouble getting the value from an ADC2 GPIO, you may consider using an ADC1 GPIO instead, that should solve your problem.
+
+
+
 ## Hardware
 
 ![sensor_analgo](sensor_analogo_bb.png)
 
 ## Ejemplo 1
+
+
+**Importante**: El ejemplo mostrado a continuación no funciona adecuadamente, esto se debe a que se esta usando el puerto **GPIO15** que es el asociado al **ADC2** lo cual es un problema (agradecimiento @DanielJaramillo94 encontro la solución).
+
+La recomendación es usar otro puerto que no sea **ADC2**, como el 34, por ejemplo, solucionamos el error.
 
 ### Software
 
