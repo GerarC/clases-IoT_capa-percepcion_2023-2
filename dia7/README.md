@@ -301,7 +301,9 @@ Las respuestas de la API REST son respuestas HTTP que comunica los resultados de
    
    **Procedimiento**: El procedimiento se describe en el [ejemplo 5](./ejemplo5/README.md)
 
-6. 
+6. Enviar la información leida desde un potenciometro conectado al ESP32 a la plataforma [dweet.io](http://dweet.io/).
+
+  **Procedimiento**: El procedimiento se describe en el [ejemplo 6](./ejemplo6/README.md)
 
 
 ## Enlaces
@@ -325,3 +327,6 @@ Las respuestas de la API REST son respuestas HTTP que comunica los resultados de
 * https://docs.espressif.com/projects/arduino-esp32/en/latest/libraries.html
 * https://github.com/UdeA-IoT/actividad-6
 * https://github.com/tamberg/fhnw-iot
+* https://www.networkworld.com/article/3133738/dweetio-a-simple-effective-messaging-service-for-the-internet-of-things.html
+* https://www.learnrobotics.org/blog/nodemcu-dweet-io-freeboard-io-tutorial-for-iot/
+* https://docs.iotify.io/temp/untitled-4
