@@ -1,5 +1,7 @@
-#include <ESP8266WiFi.h>
-// URL: https://github.com/tamberg/fhnw-iot/blob/master/03/Arduino/ESP8266_WiFiClient/ESP8266_WiFiClient.ino
+#include <WiFi.h>
+/*
+Codigo adaptado de: https://github.com/tamberg/fhnw-iot/blob/master/03/Arduino/ESP8266_WiFiClient/ESP8266_WiFiClient.ino
+*/
 
 //////////////////////
 // WiFi Definitions //
@@ -16,6 +18,23 @@ void setup() {
 
 void loop() {
   
+}
+
+void setupWiFi() {
+  // Connecting to a WiFi network
+  Serial.begin(115200);
+  Serial.println();
+  Serial.println();
+  Serial.println("Connecting to WiFi network: " + String(ssid));
+  WiFi.begin(ssid, pwd);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("");
+  Serial.println("WiFi connected");  
+  Serial.println("IP address: ");
+  Serial.println(WiFi.localIP());
 }
 
 void serverRequest() {
@@ -48,26 +67,4 @@ void serverRequest() {
       }
     }
   }
-}
-
-void setupWiFi()
-{
-
-  // Connecting to a WiFi network
-  Serial.begin(115200);
-  Serial.println();
-  Serial.println();
-  Serial.print("Connecting to ");
-  WiFi.mode(WIFI_STA);
-  Serial.println(ssid);  
-  WiFi.begin(ssid, password);  
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-
-  Serial.println("");
-  Serial.println("WiFi connected");  
-  Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());
 }
