@@ -19,19 +19,27 @@ Es importante conocer los pines sensor. A continuación se muestra un mapa de es
 
 ![conexion](DHT11–Temperature-Sensor-Pinout.jpg)
 
+En kid Elegoo tiene un modulo que usa este sensor. Este se muestra a continuación junto con la descripción de los pines de conexión:
+
+![dht11_elegoo](pines_elegoo.png)
+
 ### Esquematico
 
 ![esquematico](dh11-esp32_sch.png)
 
 ### Diagrama de conexión
 
-La conexión entre teclado matricial de membrana de 4x4 y el ESP32 se muestra en la siguiente tabla:
+La conexión entre el sensor DHT11 y el ESP32 se muestra en la siguiente tabla:
 
 |ESP32|DHT11|
 |---|---|
 |P2 (GPIO2) |S|
 |3.3V (VIN3.3V) |VSS|
 |GND (GND) |GND|
+
+A continuación se muestra el diagrama de conexión:
+
+![esquematico](dh11-esp32_bb.jpg)
 
 ## Software
 
@@ -149,5 +157,3 @@ La simulación del programa descargado se encuentra en ([link](https://wokwi.com
 * https://www.seeedstudio.com/blog/2020/04/07/how-to-pick-the-best-temperature-and-humidity-sensor-for-your-arduino-project/
 * https://www.seeedstudio.com/blog/2019/08/22/8-types-of-temperature-sensors-you-should-know/
 * https://www.seeedstudio.com/blog/2022/11/11/selection-guide-of-grove-temperature-and-humidity-sensor-that-support-esphome/
-
-

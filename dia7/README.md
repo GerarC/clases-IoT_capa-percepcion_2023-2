@@ -302,8 +302,12 @@ Las respuestas de la API REST son respuestas HTTP que comunica los resultados de
    **Procedimiento**: El procedimiento se describe en el [ejemplo 5](./ejemplo5/README.md)
 
 6. Enviar la información leida desde un potenciometro conectado al ESP32 a la plataforma [dweet.io](http://dweet.io/).
+   
+   **Procedimiento**: El procedimiento se describe en el [ejemplo 6](./ejemplo6/README.md)
 
-  **Procedimiento**: El procedimiento se describe en el [ejemplo 6](./ejemplo6/README.md)
+## Actividad
+
+Dirijase al siguiente [link](actividad/README.md) para realizar la actividad.
 
 ## Enlaces
 
