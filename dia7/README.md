@@ -127,13 +127,38 @@ Para mayor información puede consultar:
 
 ## Ejemplos
 
-1. Enunciado en construcción.
+1. Crear una red local compuesta por los siguientes elementos:
 
-   **Solución**: [código 1](./ejemplo1/README.md)
+   ![red_ESP32](ejemplo1/net_esp32AP.png)
 
-2. Enunciado en construcción.
+   El papel de cada uno de los dispositivos involucrados se muestra a continuación:
 
-   **Solución**: [código 2](./ejemplo2/README.md)
+   |Dispositivo | Rol|Descripción|
+   |---|---|---|
+   |ESP32 |Access point (AP)|Permitira creación de la red local interna para conectar a traves de Wifi todos los dispostivos pertenecientes a esta red|
+   |Computador |Cliente|Será empleado como cliente con el fin de enviar peticiones al servidor (implementado en la ESP32)|
+   |ESP32|Servidor (STA)| Ejecurara un servidor que permitira pender y apagar remotamente un led al responder a las peticiones recibidas desde el cliente|
+
+   **Procedimiento**: El procedimiento se describe en el [ejemplo1](./ejemplo1/README.md)
+
+2. Este es una variación del ejemplo anterior la cual consiste en agregar los dispositivos en una red ya disponible (como la del LIS por ejemplo). En este caso, solo se usará el ESP32 que hace de servidor y un pc (portatil y telefono movil) como cliente tal y como se muestra en la siguiente figura:
+   
+   ![red_ESP32](ejemplo2/net_esp32-STA.png)
+
+   El rol de los dispositivos implicados se muestra a continuación:
+
+   |Dispositivo|Rol|Descripción|
+   |---|---|---|
+   |Computador |Cliente|Será empleado como cliente con el fin de enviar peticiones al servidor (implementado en la ESP32)|
+   |ESP32|Servidor (STA)| Ejecurara un servidor que permitira pender y apagar remotamente un led al responder a las peticiones recibidas desde el cliente|
+
+   **Procedimiento**: El procedimiento se describe en el [ejemplo 2](./ejemplo2/README.md)
+
+3. En este ejemplo se replica el ejemplo **ESP32 Web Server – Arduino IDE** de Random Nerd Tutorials ([link](https://randomnerdtutorials.com/esp32-web-server-arduino-ide/)).
+   
+   **Procedimiento**: El procedimiento se describe en el [ejemplo 3](./ejemplo3/README.md)
+
+  
 
 ## Enlaces
 

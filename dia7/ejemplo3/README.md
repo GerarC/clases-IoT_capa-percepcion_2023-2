@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Este ejemplo, tomado de **ESP32 Web Server – Arduino IDE** ([link](https://randomnerdtutorials.com/esp32-web-server-arduino-ide/)), es una versión mejorada del ejemplo analizado en el ejemplo 2. 
+Este ejemplo, tomado de **ESP32 Web Server – Arduino IDE** ([link](https://randomnerdtutorials.com/esp32-web-server-arduino-ide/)), es una versión mejorada del ejemplo 2 ([link](../ejemplo2/README.md)) analizado previamente.
 
 En este caso, a diferencia del ejemplo 2, se muestra una interfaz web mas amigable para el control de luces y se manejan dos leds.
 
