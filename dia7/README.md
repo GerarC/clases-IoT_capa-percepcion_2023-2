@@ -158,6 +158,10 @@ Para mayor información puede consultar:
    
    **Procedimiento**: El procedimiento se describe en el [ejemplo 3](./ejemplo3/README.md)
 
+4. Este ejemplo es una adaptación de un ejemplo de la guia **ESP32 Thing Hookup Guide** de Sparkfun ([link](https://learn.sparkfun.com/tutorials/esp32-thing-hookup-guide/)). Mas exactamente el ejemplo adaptado es el de la sección **Arduino Example: WiFi** ([link](https://github.com/UdeA-IoT/ejemplos-wifi/tree/main/ejemplo4))
+   
+   **Procedimiento**: El procedimiento se describe en el [ejemplo 4](./ejemplo4/README.md)
+5. 
   
 
 ## Enlaces
