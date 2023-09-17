@@ -37,3 +37,14 @@ La siguiente tabla muestra la lista de programas necesarios para la implmentaci�
 
 * **NodeRed**: Para la creación de una interfaz grafica amigable.
 
+## Configurando el entorno virtual
+
+Para este caso, se proporciona el archivo [requirements.txt](requirements.txt) con el fin de configurar el entorno de desarrollo (para mas información sobre como hacerlo puede consultar el siguiente [link](../../herramientas/entorno-virtual-python/README.md)), por ahora resumimos el procedimiento a la ejecución de los siguientes comandos:
+
+```
+mkdir env_test
+cd env_test
+py -3 -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+```
