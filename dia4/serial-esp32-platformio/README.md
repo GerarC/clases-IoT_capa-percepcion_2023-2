@@ -1,36 +1,39 @@
+# Ejemplo de control de una ESP32 usando serial
 
+El objetivo de esta sesión es explicar paso a paso como se construye una aplicación sencilla en la ESP que se comunique de manera serial con una aplicación que se esta ejecutando en un PC o RPi.
 
-##
+## Enuciado de la aplicación
 
+Desarrolle una aplicación que permita encender y apagar un Led para el siguiente hardware:
 
-```ino
-#include <Arduino.h>
+![hardware_serial](hardware_bb.png)
 
-#define LED 2   // Assign LED to pin GPIO2 (Built-in LED)
+La aplicación se conectara mediante el serial enviando dos comandos basicos para modificar el estado del led:
 
-byte comando;
+* **```h```**: Comando empleado para encender el Led.
+* **```l```**: Comando empleado para apagar el Led.
 
-void setup() {
-  // initialize serial communication at 9600 bits per second:
-  Serial.begin(9600);
-  Serial.write("Configurando puerto serial a 9600bps\n");
-  // initialize digital pin LED as an output.
-  pinMode(LED, OUTPUT);
-}
+## Prerequisitos
 
-void loop() {
-  // check if data has been sent from the computer
-  if (Serial.available()) {
-    // read the most recent byte 
-    comando = Serial.read();
-    if(comando == 'h') {
-      digitalWrite(LED, !HIGH);
-      Serial.write("Led encendido\n");
-    }
-    else if(comando == 'l') {
-      digitalWrite(LED, !LOW);
-      Serial.write("Led apagado\n");
-    }
-  } 
-}
-```
+A continuación, se listan los ejemplos de software y hardware necesarios para llevar a cabo la implementación del proyecto.
+
+### Hardware necesario
+
+A continuación se muestra el harware necesario:
+* **Placa ESP32**: NodeMCU ESP-32S
+
+### Software necesario
+
+La siguiente tabla muestra la lista de programas necesarios para la implmentación del problema:
+* **Visual Studio Code**: Entorno de desarrollo.
+* **Platformio**: Complemento de Visual Studio code para la programación de placas de desarrollo.
+* **Librerias de python**: Estas se listan a continuación:
+  
+   |Libreria|Descripción|
+   |---|---|
+   |pyserial|Libreria para el manejo del puerto serial|
+   |kiby|Libreria para el desarrollo de interfaces graficas|
+   |FastAPI|Libreria para el desarrollo de APIs en python|
+
+* **NodeRed**: Para la creación de una interfaz grafica amigable.
+
