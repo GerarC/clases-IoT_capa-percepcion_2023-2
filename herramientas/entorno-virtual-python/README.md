@@ -127,7 +127,9 @@ Si todo esta bien, ya tendremos listo el entorno virtual con todas las dependenc
 
 Para salir del entorno virtual ejecutamos el comando **```exit```**:
 
-```exit```
+```
+exit
+```
 
 Esto hace que la consola se cierre.
 
@@ -160,7 +162,9 @@ Cuando ya existe el entorno virtual con todos los prerequisitos listos, lo unico
 
 2. **Codificar el programa en python**: Asumiendo que el firmware de control de la placa ya se descargo, se procede a codificar el programa en python ([serialLedTerminal.py](serialLedTerminal.py)) que interactuara con la placa:
    
-   ```code serialLedTerminal.py```
+   ```
+   code serialLedTerminal.py
+   ```
 
    El resultado se muestra a continuación:
 
@@ -177,7 +181,9 @@ Cuando ya existe el entorno virtual con todos los prerequisitos listos, lo unico
 
 3. **Compilar y probar el script**: Se procece a compilar y a probar el el script:
    
-   ```python serialLedTerminal.py```
+   ```
+   python serialLedTerminal.py
+   ```
 
    Si todo esta bien; en la terminal, la salida sera como la que se muestra a continuación y en el ESP32, se deberá ver el encendido y apagado del led.
 
