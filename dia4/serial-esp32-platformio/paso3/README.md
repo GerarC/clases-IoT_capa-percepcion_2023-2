@@ -11,7 +11,7 @@
 
    La siguiente figura muestra el resultado:
 
-   ![ej2_1](ejemplo2_1.png)
+   ![ej3_1](ejemplo3_1.png)
 
 ## Software
 

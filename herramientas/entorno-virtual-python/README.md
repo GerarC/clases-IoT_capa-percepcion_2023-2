@@ -119,6 +119,7 @@ py -3 -m venv .venv
 pip install pyserial
 pip install fastapi
 pip install "uvicorn[standard]"
+pip install pydantic
 pip install "kivy[base]" kivy_examples
 pip freeze > requirements.txt
 ```
