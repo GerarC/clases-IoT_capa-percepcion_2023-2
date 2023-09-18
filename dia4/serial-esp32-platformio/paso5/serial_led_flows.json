@@ -1,0 +1,212 @@
+[
+    {
+        "id": "8f03c2fcbd51514e",
+        "type": "tab",
+        "label": "LedSerial",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "376f8e5d0443b0b3",
+        "type": "serial out",
+        "z": "8f03c2fcbd51514e",
+        "name": "",
+        "serial": "fbe7cabfd61ab0d8",
+        "x": 390,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "907e42d0afe16e15",
+        "type": "debug",
+        "z": "8f03c2fcbd51514e",
+        "name": "Comando",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 410,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "6e3497995d65c37e",
+        "type": "ui_led",
+        "z": "8f03c2fcbd51514e",
+        "order": 2,
+        "group": "6b1e2e21762b19c2",
+        "width": 0,
+        "height": 0,
+        "label": "Led",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "l",
+                "valueType": "str"
+            },
+            {
+                "color": "#008000",
+                "value": "h",
+                "valueType": "str"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 650,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "f76d0e04065ace03",
+        "type": "ui_switch",
+        "z": "8f03c2fcbd51514e",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "6b1e2e21762b19c2",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "h",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "l",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 210,
+        "y": 160,
+        "wires": [
+            [
+                "6e3497995d65c37e",
+                "376f8e5d0443b0b3",
+                "8127335e1cef3d10",
+                "907e42d0afe16e15"
+            ]
+        ]
+    },
+    {
+        "id": "32e6993779f09e52",
+        "type": "ui_text",
+        "z": "8f03c2fcbd51514e",
+        "group": "6b1e2e21762b19c2",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Estado Led",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 630,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "8127335e1cef3d10",
+        "type": "function",
+        "z": "8f03c2fcbd51514e",
+        "name": "show_led_state",
+        "func": "var state_led = \"OFF\";\nif (msg.payload == \"l\") {\n   state_led = \"OFF\";\n} \nelse if (msg.payload == \"h\"){\n   state_led = \"ON\";\n}\nreturn {payload:state_led};\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nreturn {payload:\"OFF\"};",
+        "finalize": "// Code added here will be run when the\n// node is being stopped or re-deployed.\nreturn {payload:\"OFF\"};",
+        "libs": [],
+        "x": 420,
+        "y": 300,
+        "wires": [
+            [
+                "32e6993779f09e52",
+                "109a0f82bd4d26fb"
+            ]
+        ]
+    },
+    {
+        "id": "109a0f82bd4d26fb",
+        "type": "debug",
+        "z": "8f03c2fcbd51514e",
+        "name": "Estado Led",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "abc8c1b8cf4aabf6",
+        "type": "ui_spacer",
+        "z": "8f03c2fcbd51514e",
+        "name": "spacer",
+        "group": "",
+        "order": 1,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "fbe7cabfd61ab0d8",
+        "type": "serial-port",
+        "serialport": "COM7",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "6b1e2e21762b19c2",
+        "type": "ui_group",
+        "name": "Serial ON/OFF",
+        "tab": "293850de943fb234",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "293850de943fb234",
+        "type": "ui_tab",
+        "name": "Control",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

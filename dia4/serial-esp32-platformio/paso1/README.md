@@ -57,9 +57,9 @@ Cuando conecte el ESP32 verifique el nombre del puerto COM al que se asocio. Est
 
 ![admon](admon_dispositivos.png)
 
-En caso de ser la conexión en una maquina linux, se debe verificar que aparezca dentro del directorio **```/dev```** el puerto asociado al ESP32 el cual sera de la forma **```**ttyUSBx**```** donde **```x```** es un numero (0, 1, 2,...). 
+En caso de ser la conexión en una maquina linux, se debe verificar que aparezca dentro del directorio **```/dev```** el puerto asociado al ESP32 el cual sera de la forma **```ttyUSBx```** donde **```x```** es un numero (0, 1, 2,...). 
 
-Normalmente aparece de la forma **```**ttyUSB0**```**. La siguiente figura muestra la aplicación del comando (notese que en la siguiente salida no aparece una salida de la forma **```**ttyUSBx**```** indicando no esta conectado el ESP32):
+Normalmente aparece de la forma **```ttyUSB0```**. La siguiente figura muestra la aplicación del comando (notese que en la siguiente salida no aparece una salida de la forma **```ttyUSBx```** indicando no esta conectado el ESP32):
 
 ![serial](serial_linux.png)
 
