@@ -9,9 +9,7 @@ int valueX = 0;        //  Analog
 int valueY = 0;        //  Analog
 int valueZ = 0;        //  Digital
 
-String thing_nameX = "node0022";
-String thing_nameY = "node0023";
-String thing_nameZ = "node0024";
+String thing_nameXYZ = "node0022";
 
 
 // WiFi parameters
@@ -65,30 +63,15 @@ void loop() {
   Serial.println();
 
   // We now create a URI for the request
-  String urlX = "/dweet/for/" + thing_nameX + "?value=" + String(valueX);
-  String urlY = "/dweet/for/" + thing_nameY + "?value=" + String(valueY);
-  String urlZ = "/dweet/for/" + thing_nameZ + "?value=" + String(valueZ);
+  String urlXYZ = "/dweet/for/" + thing_nameXYZ + "?X=" + String(valueX) + "&Y=" + String(valueY) + "&Z=" + String(valueZ);
 
-    // Send request
-  Serial.print("Requesting URL X: ");
-  Serial.println(urlX);
+  // Send request
+  Serial.print("Requesting URL XYZ: ");
+  Serial.println(urlXYZ);
   Serial.println();
-  client.print(String("GET ") + urlX + " HTTP/1.1\r\n" +
+  client.print(String("GET ") + urlXYZ + " HTTP/1.1\r\n" +
                "Host: " + host + "\r\n" +
                "Connection: close\r\n\r\n");
-  Serial.print("Requesting URL Y: ");
-  Serial.println(urlY);
-  Serial.println();
-  client.print(String("GET ") + urlY + " HTTP/1.1\r\n" +
-               "Host: " + host + "\r\n" +
-               "Connection: close\r\n\r\n");
-  Serial.print("Requesting URL Z: ");
-  Serial.println(urlZ);
-  Serial.println();
-  client.print(String("GET ") + urlZ + " HTTP/1.1\r\n" +
-               "Host: " + host + "\r\n" +
-               "Connection: close\r\n\r\n");
-
   unsigned long timeout = millis();
   while (client.available() == 0) {
     if (millis() - timeout > 1000) {
