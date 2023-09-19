@@ -84,11 +84,6 @@ void increment() {
 
 ## Timer
 
-Referencia:
-* https://www.electronicwings.com/esp32/esp32-timer-interrupts
-* https://www.sparkfun.com/news/2613
-* https://circuitdigest.com/microcontroller-projects/esp32-timers-and-timer-interrupts
-* https://deepbluembedded.com/esp32-timers-timer-interrupt-tutorial-arduino-ide/
    
 ```ino
 /*
