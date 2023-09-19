@@ -11,4 +11,5 @@
 |5|07/09/2023|Clase 5 - Uso de bibliotecas ([link](dia5/README.md))|
 |6|12/09/2023|Clase 6 - Otros protocolos de comunicación serial: I2C ([link](dia6/README.md))|
 |7|14/09/2023|Clase 7 - Conexión por Wifi ([link](dia7/README.md))|
-|8|19/09/2023|Clase 8 - En construcción...|
+|8|19/09/2023|Clase 8 - Manejo de interrupciones (incompleto...) ([link](dia8/README.md))|
+|9|21/09/2023|Clase 9 - En construcción...|
