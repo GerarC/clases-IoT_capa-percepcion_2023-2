@@ -1,4 +1,4 @@
-# Paso 1 - Implentacion del programa en el ESP32
+# Interrupciones por timer en el ESP32
 
 ## Hardware
 
@@ -13,24 +13,21 @@
 
 A continuación se muestra esquematico del circuito:
 
-![sch](button_irq-ESP32_sch.png)
+![sch](timer_irq-ESP32_sch.png)
 
 ### Conexion
 
 A continuación se muestra el diagrama de conexión:
 
-![Diagrama](button_irq-ESP32_bb.png)
+![Diagrama](timer_irq-ESP32_bb.png.png)
 
 ## Sofware
 
-El programa que se descargara en la ESP32 se muestra a continuación:
+El programa que se descargara en la ESP32 ( [link simulación](https://wokwi.com/projects/376235742395502593)) se muestra a continuación:
 
-### Caso 1
-
-**Simulación**: [link](https://wokwi.com/projects/376220446820566017)
 
 ```ino
-
+#include <Arduino.h>
 
 // Inputs
 const int LED_PIN = LED_BUILTIN; // LED_PIN (GPIO2)
@@ -102,6 +99,16 @@ void loop() {
 }
 ```
 
-
 ## Prueba
 
+La salida en el monitor serial de platformio arrojo el siguiente resultado:
+
+![serial_output](timer_irq-ESP32.png)
+
+
+## Rerencias
+
+* https://www.electronicwings.com/esp32/esp32-timer-interrupts
+* https://www.sparkfun.com/news/2613
+* https://circuitdigest.com/microcontroller-projects/esp32-timers-and-timer-interrupts
+* https://deepbluembedded.com/esp32-timers-timer-interrupt-tutorial-arduino-ide/

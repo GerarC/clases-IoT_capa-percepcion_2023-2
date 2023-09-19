@@ -1,4 +1,4 @@
-# Paso 1 - Implentacion del programa en el ESP32
+# Interrupciones por pines externos
 
 ## Hardware
 
@@ -7,7 +7,7 @@
 |Elemento|Descripcion|
 |--|--|
 |1|Placa de desarrollo ESP32|
-|2|KY-004 Button (37 sensor Kid - Ladzo)|
+|2|KY-004 Button (37 sensor Kid - Ladzo o Elegoo)|
 
 ### Esquematico
 
@@ -25,9 +25,11 @@ A continuación se muestra el diagrama de conexión:
 
 El programa que se descargara en la ESP32 se muestra a continuación:
 
-### Caso 1
+### Caso 1 - Problema con los rebotes
 
-**Simulación**: [link](https://wokwi.com/projects/376220446820566017)
+En esta implementación, se tiene un problema con los rebotes. Para ver este problema analice primero la **simulación**: [link](https://wokwi.com/projects/376220446820566017)
+
+**Codigo**: 
 
 ```ino
 #include <Arduino.h>
@@ -59,9 +61,17 @@ void loop() {
 }
 ```
 
-### Caso 2
+### Prueba - Caso 1 
 
-**Simulación**: [link](https://wokwi.com/projects/376222724903465985)
+La salida en el monitor serial del platformio muestra el resultado.
+
+![no_debounce](no_debounce-ESP32.png)
+
+### Caso 2 - Solución del problema con los rebotes
+
+En este caso, por medio de la implementación de un retardo, se soluciona el problema del rebote del interruptor. La siguiente **simulación**: [link](https://wokwi.com/projects/376222724903465985) muestra la forma en que esto se hace.
+
+**Codigo**: 
 
 ```ino
 #include <Arduino.h>
@@ -104,6 +114,18 @@ void increment() {
 }
 ```
 
-## Prueba
+### Prueba - Caso 2
 
-A continuación se 
+La salida en el monitor serial del platformio muestra el resultado.
+
+![debounce](debounce-ESP32.png)
+
+## Referencias
+
+* https://learn.sparkfun.com/tutorials/processor-interrupts-with-arduino/all
+* https://programarfacil.com/blog/arduino-blog/interrupciones-con-arduino-ejemplo-practico/
+* https://www.luisllamas.es/que-son-y-como-usar-interrupciones-en-arduino/
+* https://randomnerdtutorials.com/esp32-pir-motion-sensor-interrupts-timers/
+* https://www.cpe.ku.ac.th/~cpj/219335/slides/05-concurrency.pdf
+* https://randomnerdtutorials.com/esp32-dual-core-arduino-ide/
+* https://learn.sparkfun.com/tutorials/processor-interrupts-with-arduino/all

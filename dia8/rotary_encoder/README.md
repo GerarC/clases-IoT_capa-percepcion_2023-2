@@ -76,3 +76,16 @@ void loop() {
   }
 }
 ```
+
+## Referencias
+
+* https://circuitdigest.com/microcontroller-projects/esp32-timers-and-timer-interrupts
+* https://www.electronicwings.com/esp32/esp32-timer-interrupts
+* https://deepbluembedded.com/esp32-timers-timer-interrupt-tutorial-arduino-ide/
+* https://esp32io.com/tutorials/esp32-rotary-encoder
+* https://github.com/igorantolic/ai-esp32-rotary-encoder
+* https://www.upesy.com/blogs/tutorials/rotary-encoder-esp32-with-arduino-code
+* https://www.arduino.cc/reference/en/libraries/ai-esp32-rotary-encoder/
+* https://electricdiylab.com/how-to-connect-optical-encoder-with-esp32/
+* https://esp32tutorials.com/esp32-pulse-counter-pcnt-esp-idf-rotary-encoder/
+* https://www.adafruit.com/product/5734

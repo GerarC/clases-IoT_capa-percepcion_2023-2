@@ -227,7 +227,7 @@ void loop() {
 
 ```
 
-----
+## Referencias
 
 
 * https://www.theengineeringprojects.com/2021/12/esp32-interrupts.html
@@ -240,7 +240,6 @@ void loop() {
 * https://www.arduino.cc/reference/en/libraries/esp32timerinterrupt/
 * https://github.com/khoih-prog/ESP32TimerInterrupt
 * https://github.com/khoih-prog/ESP32TimerInterrupt/tree/master/examples/multiFileProject
-
 * https://randomnerdtutorials.com/esp32-pir-motion-sensor-interrupts-timers/
 * https://randomnerdtutorials.com/micropython-interrupts-esp32-esp8266/
 * https://learn.sparkfun.com/tutorials/processor-interrupts-with-arduino/all
@@ -259,9 +258,6 @@ void loop() {
 * https://www.arduino.cc/reference/en/language/functions/external-interrupts/attachinterrupt/
 * https://controlautomaticoeducacion.com/arduino/interrupciones-arduino/
 * https://www.theengineeringprojects.com/2021/12/esp32-interrupts.html
-
-## Referencias
-
 * http://stefanfrings.de/multithreading_arduino/
 * https://hackaday.com/2021/03/17/running-57-threads-at-once-on-the-arduino-uno/
 * https://www.arduino.cc/reference/en/libraries/arduinothread/
@@ -272,4 +268,3 @@ void loop() {
 * https://wiki.seeedstudio.com/reServer-Getting-Started/
 * https://www.seeedstudio.com/blog/2021/05/11/multitasking-with-arduino-millis-rtos-more/
 * https://www.hackster.io/485734/azure-rtos-threadx-for-arduino-101-threads-963a8d
-* 
