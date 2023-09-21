@@ -199,6 +199,130 @@ La salida en el monitor serial se muestra a continuación:
 
 ![irq](rotary_irq-ESP32.png)
 
+### Caso 3 - Programa mejorado usando interrupciones
+
+La implementación de este código se muestra a continuación [link](https://wokwi.com/projects/376427146413918209)
+
+
+```ino
+#include <Arduino.h>
+
+/* ---- Pines I/O ---- */
+
+// Rotary encoder Encoder (I)
+#define ENCODER_CLK 14
+#define ENCODER_DT  12
+#define ENCODER_SW  13
+#define DEBUG 1
+
+// Constantes
+const char DEBOUNCE_TIME = 50;
+
+// Variables aplicacion
+unsigned char counter = 0;       // Brillo led integrado
+int valClk = HIGH;
+int dtValue = HIGH;
+long int clkLastChanged = 0;     // cambio clk
+long int resetLastChanged = 0;   // cambio reset
+
+// Reset del brillo
+volatile byte SW_EVENT = LOW;
+volatile byte CKL_EVENT = LOW;
+volatile byte PRINT_EVENT = LOW;
+
+hw_timer_t *timer_100m = NULL;       // H/W timer 
+
+/* ---- Interrupt handlers ---- */
+
+void ARDUINO_ISR_ATTR event_print(){
+  PRINT_EVENT = HIGH;
+}
+
+void event_sw() {
+  SW_EVENT = HIGH;
+}
+
+void event_clk() {
+  CKL_EVENT = HIGH;
+}
+
+/* ---- Funciones ---- */
+
+// Reset encoder
+void resetEncoder() {
+  if (digitalRead(ENCODER_SW) == LOW && millis() - resetLastChanged > DEBOUNCE_TIME) {
+    resetLastChanged = millis();
+    counter = 0;
+  }
+}
+
+// Actualizancion del brillo
+void updateEncoder() {
+  if ((millis() - clkLastChanged) < DEBOUNCE_TIME)  // debounce time is 50ms
+    return;
+  dtValue = digitalRead(ENCODER_DT);
+  if (dtValue == LOW) {
+    // Serial.println("DOWN"); 
+    counter--;
+  }
+  else {
+    // Serial.println("UP"); 
+    counter++;
+  }
+  clkLastChanged = millis();
+}
+
+/* ---- Inicialización ---- */
+void setup() {
+  // Inicializacion serial
+  Serial.begin(115200);
+
+  // Inicializacion I/O
+  pinMode(LED_BUILTIN,OUTPUT);   
+  pinMode(ENCODER_CLK, INPUT);
+  pinMode(ENCODER_DT, INPUT);
+  pinMode(ENCODER_SW, INPUT_PULLUP);
+  
+  // Inicializacion de interrupciones externas
+  attachInterrupt(digitalPinToInterrupt(ENCODER_CLK), event_clk, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(ENCODER_SW), event_sw, CHANGE);
+
+  // Inicializacion del timer 
+  timer_100m = timerBegin(0, 80, true);
+  timerAttachInterrupt(timer_100m, &event_print, true);
+  timerAlarmWrite(timer_100m, 100000, true);
+  timerAlarmEnable(timer_100m);
+
+  // Impresion en el monitor serial
+  Serial.print("Counter: ");
+  Serial.println(counter);      
+}
+
+/* ---- Loop infinito ---- */
+void loop() {
+  // Evento reset
+  if (SW_EVENT == HIGH) {
+    // Serial.println("Debug: Reset event");
+    resetEncoder();    
+    analogWrite(LED_BUILTIN,counter); 
+    SW_EVENT = LOW; // No olvidar (atencion del evento)
+  } 
+  // Evento de actualización del contador
+  if (CKL_EVENT == HIGH) {
+    // Serial.println("Debug: Update event");
+    updateEncoder();
+    analogWrite(LED_BUILTIN,counter); 
+    CKL_EVENT = LOW; // No olvidar (atencion del evento)
+  } 
+  // Evento para la impresion en pantalla
+  if (PRINT_EVENT == HIGH) {
+    Serial.print("Counter: ");
+    Serial.println(counter);   
+    PRINT_EVENT = LOW; // No olvidar (atencion del evento)
+  } 
+}
+```
+
 ## Referencias
 
 * https://circuitdigest.com/microcontroller-projects/esp32-timers-and-timer-interrupts
