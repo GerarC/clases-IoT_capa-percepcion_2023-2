@@ -41,7 +41,8 @@ void loop() {
 ### Code 2
 
 When switch S1 is pressed, toggles the green LED
-```
+
+```ino
 /* ---- Pines I/O ---- */
 const int redPin = 19;     // Red RGB pin -> P19 (GPIO19)
 const int greenPin = 18;   // Green RGB pin -> P18 (GPIO18)
