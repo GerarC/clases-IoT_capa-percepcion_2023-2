@@ -270,33 +270,33 @@ const int buttonPin = 15;  // Button pin -> P17 (GPIO17)
 // Constantes
 const int DEBOUNCE_TIME = 50;
 const int T_TIME = 2000;
-
-// Eventos
-volatile int BUTTON_EVENT = LOW;
-volatile int EVENT_DELAY = LOW;
-volatile int EVENT_T = LOW;
+const int ON_TIME = 100;
 
 // Variables de estado
-int buttonState;
+int buttonState = LOW;
+int last_buttonState = LOW; 
 bool color_red = true; 
 
-// Timers
-hw_timer_t *delay_timer = NULL;        // H/W timer (timer 0)
-hw_timer_t *period_timer = NULL;       // H/W timer (timer 1) 
+// Hilos
+TaskHandle_t hilo1;
 
-void button_handler() {
-  BUTTON_EVENT = HIGH;
+//Task1code: blinks an LED every 1000 ms
+void cambiarColor( void * pvParameters ){
+  for(;;){
+    buttonState = digitalRead(buttonPin);
+    delay(DEBOUNCE_TIME); // Delay
+    last_buttonState = buttonState;
+    buttonState = digitalRead(buttonPin);
+    if (buttonState == last_buttonState) {
+      // Valor estable
+      if (buttonState == HIGH) {
+        // Serial.println("Cambio");
+        color_red = !color_red;
+      }
+    }   
+  } 
 }
 
-void ARDUINO_ISR_ATTR delay_handler() {
-  EVENT_DELAY = HIGH;
-}
-
-void ARDUINO_ISR_ATTR period_handler() {
-  EVENT_T = HIGH;
-}
-
-/* ---- Setup ---- */
 void setup() {
   // Inicializacion de pines
   pinMode(redPin, OUTPUT);
@@ -306,52 +306,35 @@ void setup() {
   digitalWrite(redPin, LOW);
   digitalWrite(bluePin, LOW);
   digitalWrite(greenPin, LOW);
-  // Interrupciones externas
-  attachInterrupt(digitalPinToInterrupt(buttonPin), button_handler, RISING);
-  // Timers
-  // delay
-  delay_timer = timerBegin(0, 80, true);
-  timerAttachInterrupt(delay_timer, &delay_handler, true);
-  timerAlarmWrite(delay_timer, DEBOUNCE_TIME*1000, true);
-  timerAlarmEnable(delay_timer);
-  // period (T)
-  period_timer = timerBegin(1, 80, true);
-  timerAttachInterrupt(period_timer, &period_handler, true);
-  timerAlarmWrite(period_timer, T_TIME*1000, true);
-  timerAlarmEnable(period_timer);
-  // Serial.begin(9600);
+  // Serial
+  Serial.begin(9600);
+
+  // Hilos
+  xTaskCreatePinnedToCore(
+                    cambiarColor,   /* Task function. */
+                    "cambiarColor",     /* name of task. */
+                    10000,       /* Stack size of task */
+                    NULL,        /* parameter of the task */
+                    1,           /* priority of the task */
+                    &hilo1,      /* Task handle to keep track of created task */
+                    0);          /* pin task to core 0 */                  
+  delay(500); 
 }
 
-/* ---- Loop ---- */
 void loop() {
-  if (BUTTON_EVENT == HIGH) {
-    timerRestart(delay_timer);
-    if (EVENT_DELAY == HIGH) {
-      // Serial.println("Boton presionado");      
-      EVENT_DELAY = LOW;
-      color_red = !color_red;
-    }
-    BUTTON_EVENT = LOW;
+  // En el hilo principal se realiza el parpadeo
+  if(color_red == true) {
+    digitalWrite(redPin, HIGH);
+    digitalWrite(greenPin, LOW);
   }
-  /*
-  if (EVENT_DELAY == HIGH) {    
-    EVENT_DELAY = LOW;
+  else {
+    digitalWrite(redPin, LOW);
+    digitalWrite(greenPin, HIGH);
   }
-  */
-  if (EVENT_T == HIGH) {
-    if (color_red == true) { 
-      digitalWrite(redPin, HIGH);  
-      digitalWrite(greenPin, LOW); 
-    }
-    else {
-      digitalWrite(redPin, LOW);  
-      digitalWrite(greenPin, HIGH); 
-    }
-    delay(100);
-    digitalWrite(redPin, LOW);  
-    digitalWrite(greenPin, LOW); 
-    EVENT_T = LOW;
-  }
+  delay(ON_TIME);
+  digitalWrite(redPin, LOW);
+  digitalWrite(greenPin, LOW);
+  delay(T_TIME - ON_TIME);
 }
 ```
 
