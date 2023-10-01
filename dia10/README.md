@@ -445,3 +445,5 @@ La interfaz de la sala se muestra a continuación:
 * https://learn.adafruit.com/set-up-home-assistant-with-a-raspberry-pi
 * https://learn.adafruit.com/pm25-air-quality-sensor
 * https://learn.adafruit.com/search?q=All%2520the%2520Internet%2520of%2520Things
+* https://piolabs.com/blog/news/microsoft-leverages-platformio.html
+* https://abstractexpr.com/2023/06/29/structures-in-c-from-basics-to-memory-alignment/
