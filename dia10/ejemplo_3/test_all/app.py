@@ -1,13 +1,3 @@
-# Test server
-
-Informacion del test del server...
-
-
-Requisitos:
-* Paho
-* Json
-
-```python
 import json
 import time
 
@@ -15,14 +5,16 @@ import paho.mqtt.client as mqtt
 
 UMBRAL = 2500
 
-id = '<ID>'
+id_server = 'SERVER_IOT_UDEA'
+id_thing = 'IOT_UDEA-001'
 
-client_telemetry_topic = id + '/telemetry'
-server_command_topic = id + '/commands'
-client_name = id + 'sensor_client'
+client_telemetry_topic = id_server + '/telemetry'
+server_command_topic = id_thing + '/commands'
+client_name = id_server + 'sensor_client'
 
 mqtt_client = mqtt.Client(client_name)
-mqtt_client.connect('test.mosquitto.org')
+#mqtt_client.connect('test.mosquitto.org')
+mqtt_client.connect('127.0.0.1')
 
 mqtt_client.loop_start()
 
@@ -46,6 +38,4 @@ mqtt_client.on_message = handle_telemetry
 
 while True:
     time.sleep(2)
-```
-
 
