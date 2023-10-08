@@ -220,6 +220,54 @@ En la siguiente figura muestra el monitor serial con el programa en funcionamien
 
 En construcción...
 
+## Cliente python
+
+Requisitos:
+* Paho
+* Json
+
+```python
+import json
+import time
+
+import paho.mqtt.client as mqtt
+
+UMBRAL = 2500
+
+id = '<ID>'
+
+client_telemetry_topic = id + '/telemetry'
+server_command_topic = id + '/commands'
+client_name = id + 'sensor_client'
+
+mqtt_client = mqtt.Client(client_name)
+mqtt_client.connect('test.mosquitto.org')
+
+mqtt_client.loop_start()
+
+def send_alarm_command(client, state):
+    command = { 'alarm_on' : state }
+    print("Sending message:", command)
+    client.publish(server_command_topic, json.dumps(command))
+
+def handle_telemetry(client, userdata, message):
+    payload = json.loads(message.payload.decode())
+    print("Message received:", payload)
+
+    if payload['analog_variable'] > UMBRAL:
+        send_alarm_command(client, True)
+    else:
+        send_alarm_command(client, False)
+
+
+mqtt_client.subscribe(client_telemetry_topic)
+mqtt_client.on_message = handle_telemetry
+
+while True:
+    time.sleep(2)
+```
+
+
 ## Referencias
 
 * https://www.seeedstudio.com/blog/2021/02/19/build-an-mqtt-intercom-with-wio-terminal-with-code/
@@ -235,6 +283,8 @@ En construcción...
 * https://wiki.keyestudio.com/Main_Page
 * https://thingsboard.io/docs/samples/raspberry/grove/
 * https://www.seeedstudio.com/IoT-for-beginners-with-Seeed-and-Microsoft-Wio-Terminal-Starter-Kit-p-5006.html
+* https://xtrium.com/esp32-wont-connect-to-wifi/
+* https://randomnerdtutorials.com/solved-reconnect-esp32-to-wifi/
 
 
 
