@@ -18,31 +18,79 @@ Los mensajes entre los clientes son direccionados por el broker por medio del **
 * **publish**: en este caso el cliente envia información a broker para que esta sea distribuida a los demas clientes interesados con base en el nombre del **topic**.
 * **subscribe**: cuando se suscriben, los clientes indican al broker cuales son los **topic(s)** en los que estos se encuentran interesados, de manera que cualquier mensaje publicado por el broker es distribuido a los clientes que se encuentra **suscritos** (interesados) a dicho topic. Un cliente tambien puede **unsubscribe** a un tipico para parar de recibir mensajes desde el broker a traves de dicho topic.
 
-### Elementos necesarios
+## Elementos necesarios
 
 Para trabajar con MQTT es necesario tener como minimo instalados los siguientes programas:
 1. **El broker**: El software que implementa el broker debe estar instalado en uno de los dispositivos de la red MQTT (normalmente un PC, una RPi, cualquier dispositivo de borde o incluso en la nube) para hacer posible el redireccionamiento de los mensajes. 
-2. **Clientes**: Los clientes pueden implentarse como aplicaciones de usuario (como **mosquito_pub**, **mosquito_sub** o **MQTT Explorer**) o pueden integrarsen a programas por medio de algun API MQTT mediante el uso de librerias en algun lenguaje de programación.
+2. **Clientes**: Los clientes pueden implentarse como aplicaciones de usuario (como **mosquito_pub**, **mosquito_sub** o **MQTT Explorer**) o pueden integrarsen a programas por medio de algun API MQTT (**Eclipse Paho** por ejemplo) mediante el uso de librerias en algun lenguaje de programación.
 
 Antes de empezar implementar una red MQTT, asegurese de tener instalados los siguientes elementos:
-1. Un broker MQTT en una maquina (el mosquitto ([link](https://mosquitto.org/download/)) fue la opción empleada en nuestro caso).
-2. Un cliente MQTT para el envio y recepción de paquetes. (En nuestro caso se instalaron como minimo, el mosquitto_pub, el mosquito_sub y el MQTT Explorer)
-
+1. Un **broker MQTT** en una maquina (el mosquitto ([link](https://mosquitto.org/download/)) fue la opción empleada en nuestro caso).
+2. Un cliente MQTT para el envio y recepción de paquetes. En nuestro caso se instalaron:
+   *  **mosquitto_pub** (Viene integrado en el broker MQTT Mosquitto).
+   *  **el mosquito_sub** (Viene integrado en el broker MQTT Mosquitto).
+   *  **MQTT Explorer**
+3. Una libreria, en algún lenguaje de programación, para el desarrollo de clientes que usen MQTT. En nuestro caso se empleó la libreria **Eclipse Paho** ([link](https://projects.eclipse.org/projects/iot.paho))
+   
 Despues de realizar esto, es bueno verificar el correcto funcionamiento de las aplicaciones instaladas realizando una prueba sencilla en la que se verifique el funcionamiento del broker y los clientes.
 
-### Implementación de clientes MQTT en las cosas
+## Implementación de clientes MQTT en las cosas
 
-Por cosas hacemos referencia a los dispositivos que interactuan con el ambiente en la capa de percepción, en otras palabras las placas. En nuestro caso, como estamos trabajando con la placa **ESP32** es necesario instalar las librerias necesarias para que un ESP32 pueda funcionar como cliente en una red MQTT ([EspMQTTClient](https://www.arduino.cc/reference/en/libraries/espmqttclient/)). El repositorio de la libreria **EspMQTTClient** se encuentra en el siguiente [link](https://github.com/plapointe6/EspMQTTClient).
+Por cosas hacemos referencia a los dispositivos que interactuan con el ambiente en la capa de percepción, en otras palabras las placas. En nuestro caso, como estamos trabajando con la placa **ESP32** es necesario instalar las librerias necesarias para que un ESP32 pueda funcionar como cliente en una red MQTT.
+
+### Instalación en Arduino
+
+([EspMQTTClient](https://www.arduino.cc/reference/en/libraries/espmqttclient/)). 
+
+El repositorio de la libreria **EspMQTTClient** se encuentra en el siguiente [link](https://github.com/plapointe6/EspMQTTClient).
 
 Para llevar a cabo la instalación de esta libreria en el IDE de Arduino, siga los siguientes pasos (ver: Installing an Arduino Library ([link](https://learn.sparkfun.com/tutorials/installing-an-arduino-library/all#using-the-arduino-library-manager))):
-1. Abra el administrador de librerias: **Sketch -> Include Library -> Manage Libraries...**
+1. Abra el administrador de librerias: **Tools -> Manage Libraries...**
 2. Digite en el campo de busqueda la palabra clave **pubsub**, seleccione la libreria **EspMQTTClient** e instalela:
-
-![mqtt_arduino](mqtt_arduino.png)
+      
+   ![mqtt_install_arduino_new1](mqtt_install_arduino-new.png)
 
 3. Como esta libreria depende se otras dependencias, acepte la opcion que permite la instalación de todas las librerias (Install All) incluyendo las dependencias:
 
-![mqtt_arduino2](mqtt_arduino2.png)
+   ![mqtt_install_arduino_new2](mqtt_install_arduino_ok-new.png)
+
+
+Si todo esta bien, ya esta todo listo para realizar programas que permitan la comunición de la ESP32 usando MQTT empleando como IDE el Arduino.
+
+### Instalación en Platformio
+
+La instalación en platformio se reduce simplemente a agregar la libreria MQTT (en nuestro caso se instalo la libreria **Arduino Client for MQTT** ([link](https://pubsubclient.knolleary.net/))) en el archivo de configuración **platformio.ini** (tal y como se ha hecho con las otras librerias). Este quedará de la siguiente forma: 
+
+```ini
+[env:nodemcu-32s]
+platform = espressif32
+board = nodemcu-32s
+framework = arduino
+lib_deps = knolleary/PubSubClient@^2.8
+```
+
+Sin embargo a continuación se explica como se realiza el procedimiento paso a paso (para profundizar ver la pagina **https://fastbitlab.com/fsm-lecture-31-adding-arduino-library-to-project-in-platformio/** ([link](https://fastbitlab.com/fsm-lecture-31-adding-arduino-library-to-project-in-platformio/))):
+1. Dar click en el boton **Libraries** y colocar en el cuadro de busqueda una palabra clave relacionada con la libreria de interes (en nuestro caso se coloco **mqtt** como palabra de busqueda). Luego, seleccionar de la lista de librerias que aparece aquella que deseamos instalar:
+   
+   ![platformio1](install_library_MQTT_platformio1.png)
+   
+2. Agregar la libreria al proyecto.
+   
+   ![platformio2](install_library_MQTT_platformio2.png)
+
+3. En la lista de proyectos desplegadas, elegir el proyecto en el cual se va a realizar la instalación de la libreria.
+   
+   ![platformio3](install_library_MQTT_platformio3.png)
+
+4. Si todo sale bien, la libreria se agregará al archivo de configuración del proyecto **platformio.ini**
+   
+   ![platformio4](install_library_MQTT_platformio4.png)
+
+Si todo esta bien, ya es posible, para este proyecto, codificar programas que permitan la comunicación de la ESP32 por medio del protocolo MQTT usand platformio.
+
+
+
+
 
 ## Caso de prueba
 
@@ -402,6 +450,7 @@ La interfaz de la sala se muestra a continuación:
 
 ## Referencias
 
+* https://cedalo.com/blog/mqtt-and-arduino-setup-guide/
 * https://www.valvers.com/open-software/arduino/esp32-mqtt-tutorial/#debug-output
 * https://cedalo.com/blog/enabling-esp32-mqtt/
 * https://randomnerdtutorials.com/esp32-mqtt-publish-subscribe-arduino-ide/
