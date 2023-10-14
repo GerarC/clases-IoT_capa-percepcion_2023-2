@@ -40,11 +40,7 @@ Por cosas hacemos referencia a los dispositivos que interactuan con el ambiente 
 
 ### Instalación en Arduino
 
-([EspMQTTClient](https://www.arduino.cc/reference/en/libraries/espmqttclient/)). 
-
-El repositorio de la libreria **EspMQTTClient** se encuentra en el siguiente [link](https://github.com/plapointe6/EspMQTTClient).
-
-Para llevar a cabo la instalación de esta libreria en el IDE de Arduino, siga los siguientes pasos (ver: Installing an Arduino Library ([link](https://learn.sparkfun.com/tutorials/installing-an-arduino-library/all#using-the-arduino-library-manager))):
+El repositorio de la libreria **EspMQTTClient** se encuentra en el siguiente [link](https://github.com/plapointe6/EspMQTTClient). Para llevar a cabo la instalación de esta libreria en el IDE de Arduino, siga los siguientes pasos:
 1. Abra el administrador de librerias: **Tools -> Manage Libraries...**
 2. Digite en el campo de busqueda la palabra clave **pubsub**, seleccione la libreria **EspMQTTClient** e instalela:
       
@@ -69,7 +65,7 @@ framework = arduino
 lib_deps = knolleary/PubSubClient@^2.8
 ```
 
-Sin embargo a continuación se explica como se realiza el procedimiento paso a paso (para profundizar ver la pagina **https://fastbitlab.com/fsm-lecture-31-adding-arduino-library-to-project-in-platformio/** ([link](https://fastbitlab.com/fsm-lecture-31-adding-arduino-library-to-project-in-platformio/))):
+Sin embargo a continuación se explica como se realiza el procedimiento paso a paso (para profundizar ver la pagina *FSM Lecture 31- Adding arduino Library to project in platformIO* ([link](https://fastbitlab.com/fsm-lecture-31-adding-arduino-library-to-project-in-platformio/))):
 1. Dar click en el boton **Libraries** y colocar en el cuadro de busqueda una palabra clave relacionada con la libreria de interes (en nuestro caso se coloco **mqtt** como palabra de busqueda). Luego, seleccionar de la lista de librerias que aparece aquella que deseamos instalar:
    
    ![platformio1](install_library_MQTT_platformio1.png)
@@ -87,9 +83,6 @@ Sin embargo a continuación se explica como se realiza el procedimiento paso a p
    ![platformio4](install_library_MQTT_platformio4.png)
 
 Si todo esta bien, ya es posible, para este proyecto, codificar programas que permitan la comunicación de la ESP32 por medio del protocolo MQTT usand platformio.
-
-
-
 
 
 ## Caso de prueba
