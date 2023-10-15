@@ -129,8 +129,7 @@ Una vez instaladas las librerias necesarias en el IDE, el suguiente paso consist
    ```cpp
    #include <Wifi.h>
    #include <PubSubClient.h>
-   
-  
+     
    /* ----- Puertos ----- */
    // Definicion de los pines
    ...
@@ -289,16 +288,15 @@ Supongamos que se nos da el siguiente problema: Se desea implementar un programa
    
    |Parametro|Valor|
    |---|---|
-   |SSID|```"<SSID>"```|
-   |PASSWORD|```"<PASSWORD>"```|
+   |SSID|```"IoT"```|
+   |PASSWORD|```"1245678h"```|
 
 4. **Parametros MQTT**: 
    
    |Parametro|Valor|
    |---|---|
-   |BROKER|```"<IP_BROKER>"```|
-   |PASSWORD|```"<PASSWORD>"```|
-   |ID|```"<ID_THING>"```|
+   |BROKER|```"192.168.43.55"```|
+   |ID|```"UdeA_thing-001"```|
    
 5. **Topicos**.  
    
@@ -317,6 +315,131 @@ Supongamos que se nos da el siguiente problema: Se desea implementar un programa
 
    ![loop_flow](loop_flow.png)
 
+A continuación, se muestra el código asociado a la implementación para el ESP32:
+
+```cpp
+#include <Wifi.h>
+#include <PubSubClient.h>
+     
+/* ----- Puertos ----- */
+const int THERMISTOR_PIN = 33; 
+
+
+/* ----- Wifi ----- */
+const char* ssid = "IoT";   // name of your WiFi network
+const char* password = "1245678h"; // password of the WiFi network
+WiFiClient wifiClient;
+ 
+/* ----- MQTT ----- */
+const char* mqttBroker = "test.mosquito.org"; // IP address of your MQTT 
+const char *ID = "UdeA_thing-001";  // Name of our device, must be unique
+// Topics
+const char *topic = "/home/room/temperature"; 
+
+// Setup MQTT client
+PubSubClient mqttclient(wclient); 
+
+/* ----- Variables del programa ----- */
+// Variables y constantes asociadas al programa
+const int PORT_SPEED = 9600; 
+float currentTemp;
+const long intTimer = 5000; // Intervalo de publicación (5 seg)
+unsigned long prevTimer = 0; // Marca de tiempo anterior (t - 1)
+unsigned long actualTimer = 0; // Marca de tiempo actual (t)
+   
+/* ----- Helper Functions ----- */   
+ 
+float get_Temperature(int analog_pin){
+  const float BETA = 3950; // should match the Beta Coefficient of the thermistor
+  int analogValue = analogRead(analog_pin);
+  float celsius = 1 / (log(1 / (1023. / analogValue - 1)) / BETA + 1.0 / 298.15) - 273.15;
+  return celsius; 
+}
+ 
+// --- MQTT ---
+void mqttConnect() {
+  // Loop until we're reconnected
+  while (!mqttClient.connected()) {
+    Serial.print("Attempting MQTT connection...");
+    if (mqttClient.connect(ID)) {
+      Serial.println("OK");
+      // Topic(s) subscription
+      // En este ejemplo solo se publica
+    } 
+    else {     
+      // Retry connection
+      Serial.print("failed, rc=");
+      Serial.print(mqttClient.state());
+      Serial.println(" try again in 5 seconds");
+      delay(5000);    
+    }
+  }
+}
+
+// --- Wifi ---
+
+// Wifi conection
+void setup_wifi() {
+  Serial.print("\nConnecting to ");
+  Serial.println(ssid);
+
+  WiFi.begin(ssid, password); // Connect to network
+
+  while (WiFi.status() != WL_CONNECTED) { // Wait for connection
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println();
+  Serial.println("WiFi connected");
+  Serial.print("IP address: ");
+  Serial.println(WiFi.localIP());
+}
+   
+/* ----- Main funtions ----- */
+void setup() {
+  // Serial setup
+  Serial.begin(PORT_SPEED);
+  // Setup wifi
+  setup_wifi();
+
+  // MQTT setup
+  mqttClient.setServer(mqttBroker, 1883);
+  mqttClient.setCallback(callback);
+}
+  
+// loop
+void loop() {
+  // Let PubSubClient library do his magic
+  mqttClient.poll();
+
+  actualTimer = millis();
+  // Check if the timer is expired
+  if (actualTimer - prevTimer >= intTimer) {
+    // save the last timestamp a message was sent
+    prevTimer = actualTimer;
+
+    // Read temperature
+    currentTemp = get_Temperature(THERMISTOR_PIN); 
+
+    // Post some debugging information on serial port
+    Serial.print("[MQTT]: Sending message to topic: ");
+    Serial.println(topic);
+    Serial.println(currentTemp);
+
+    // Publish message
+    mqttClient.beginMessage(topic);    
+    mqttClient.print(currentTemp);
+    mqttClient.endMessage();
+
+    Serial.println();
+  }
+}    
+```
+
+
+
+
 ----
 
 Para comprender una implementación de una red MQTT sencilla vamos a plantear el caso de prueba mostrado en la siguiente figura:
@@ -324,6 +447,8 @@ Para comprender una implementación de una red MQTT sencilla vamos a plantear el
 ![caso_test](mqtt_caso.png)
 
 El objetivo en este caso es simular la implementación del control de iluminación de una oficina mediante MQTT. La siguiente tabla describe cada uno de los clientes de la red MQTT:
+
+
 
 | Dispositivo | Cliente |Rol|Topic (message-topic)|Mensaje (message)|Observaciones|
 |---|---|---|---|---|---|
@@ -721,3 +846,4 @@ La interfaz de la sala se muestra a continuación:
 * https://piolabs.com/blog/news/microsoft-leverages-platformio.html
 * https://abstractexpr.com/2023/06/29/structures-in-c-from-basics-to-memory-alignment/
 * https://deepbluembedded.com/esp32-adc-tutorial-read-analog-voltage-arduino/
+* https://www.hivemq.com/blog/sparkplug-essentials-part-3-poll-response/
