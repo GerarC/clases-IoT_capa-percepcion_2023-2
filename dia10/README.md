@@ -250,6 +250,8 @@ Una vez instaladas las librerias necesarias en el IDE, el suguiente paso consist
    }    
    ```
 
+Para saber como implementar un cliente en la ESP32, es necesario consultar la documentación del API **EspMQTTClient** en el siguiente [link](https://github.com/plapointe6/EspMQTTClient).
+
 Si desea profundizar un poco sobre esto, le recomendamos mirar los siguientes tutoriales:
 * **Curso de MQTT** ([link](https://www.luisllamas.es/curso-mqtt/))
 * **MQTT Protocol Guide: Everything You Need to Know** ([link](https://cedalo.com/blog/complete-mqtt-protocol-guide/))
@@ -306,7 +308,6 @@ Supongamos que se nos da el siguiente problema: Se desea implementar un programa
    
 6. **Código**: Los diagramas mostrados a continuación (tomados de [link](https://cedalo.com/blog/mqtt-and-arduino-setup-guide/)) resume la implementación del codigo que sera codificado en el ESP32:
 
-
    **Inicialización**:
 
    ![init_flow](init_flow.png)
@@ -318,42 +319,70 @@ Supongamos que se nos da el siguiente problema: Se desea implementar un programa
 A continuación, se muestra el código asociado a la implementación para el ESP32:
 
 ```cpp
+#include <Arduino.h>
 #include <Wifi.h>
 #include <PubSubClient.h>
      
 /* ----- Puertos ----- */
 const int THERMISTOR_PIN = 33; 
 
+/* ----- Caracteristicas del Termistor -----*/
+const double VCC = 3.3;             // NodeMCU on board 3.3v vcc
+const double R2 = 10000;            // 10k ohm series resistor
+const double adc_resolution = 4096; // 12-bit adc
+
+const double A = 0.001129148;   // thermistor equation parameters
+const double B = 0.000234125;
+const double C = 0.0000000876741; 
+
 
 /* ----- Wifi ----- */
 const char* ssid = "IoT";   // name of your WiFi network
 const char* password = "1245678h"; // password of the WiFi network
-WiFiClient wifiClient;
+WiFiClient wClient;
  
 /* ----- MQTT ----- */
-const char* mqttBroker = "test.mosquito.org"; // IP address of your MQTT 
+const char* mqttBroker = "192.168.43.55"; // IP address of your MQTT 
 const char *ID = "UdeA_thing-001";  // Name of our device, must be unique
 // Topics
 const char *topic = "/home/room/temperature"; 
 
 // Setup MQTT client
-PubSubClient mqttclient(wclient); 
+
+PubSubClient mqttClient(wClient); 
 
 /* ----- Variables del programa ----- */
 // Variables y constantes asociadas al programa
 const int PORT_SPEED = 9600; 
-float currentTemp;
-const long intTimer = 5000; // Intervalo de publicación (5 seg)
-unsigned long prevTimer = 0; // Marca de tiempo anterior (t - 1)
+const int BUF_SIZE = 100;
+int adc_value;
+double currentTemp;
+
+const long intTimer = 5000;    // Intervalo de publicación (5 seg)
+unsigned long prevTimer = 0;   // Marca de tiempo anterior (t - 1)
 unsigned long actualTimer = 0; // Marca de tiempo actual (t)
-   
+char message[BUF_SIZE];
+
+
 /* ----- Helper Functions ----- */   
  
-float get_Temperature(int analog_pin){
-  const float BETA = 3950; // should match the Beta Coefficient of the thermistor
-  int analogValue = analogRead(analog_pin);
-  float celsius = 1 / (log(1 / (1023. / analogValue - 1)) / BETA + 1.0 / 298.15) - 273.15;
-  return celsius; 
+float get_Temperature(int acd_value){
+  double Vout, Rth, temperature;
+  adc_value = adc_resolution - acd_value + 0.5; // switch direction
+  Vout = (adc_value * VCC) / adc_resolution; 
+  Rth = (VCC * R2 / Vout) - R2; // Formula for R2 as Pull-down: Vcc-Rth-R2-GND
+
+  /*  Steinhart-Hart Thermistor Equation:
+   *  Temperature in Kelvin = 1 / (A + B[ln(R)] + C[ln(R)]^3)
+  */
+  temperature = (1 / (A + (B * log(Rth)) + (C * pow((log(Rth)),3))));   // Temperature in kelvin
+  temperature = temperature - 273.15;  // Temperature in degree celsius
+  // Serial.print("Rth:");
+  // Serial.print(Rth);
+  // Serial.print(" Temperature = ");
+  // Serial.print(temperature);
+  // Serial.println(" degree celsius");
+  return temperature;
 }
  
 // --- MQTT ---
@@ -405,13 +434,16 @@ void setup() {
 
   // MQTT setup
   mqttClient.setServer(mqttBroker, 1883);
-  mqttClient.setCallback(callback);
 }
   
 // loop
 void loop() {
+  // Check if we are still connected to the MQTT broker
+  if (!mqttClient.connected()) {
+    mqttConnect();
+  }
   // Let PubSubClient library do his magic
-  mqttClient.poll();
+  mqttClient.loop();
 
   actualTimer = millis();
   // Check if the timer is expired
@@ -420,48 +452,33 @@ void loop() {
     prevTimer = actualTimer;
 
     // Read temperature
-    currentTemp = get_Temperature(THERMISTOR_PIN); 
+    adc_value = analogRead(THERMISTOR_PIN);
+    currentTemp = get_Temperature(adc_value); 
+    String(currentTemp, 2).toCharArray(message, BUF_SIZE);
 
     // Post some debugging information on serial port
     Serial.print("[MQTT]: Sending message to topic: ");
     Serial.println(topic);
-    Serial.println(currentTemp);
+    Serial.println(message);
 
     // Publish message
-    mqttClient.beginMessage(topic);    
-    mqttClient.print(currentTemp);
-    mqttClient.endMessage();
+    mqttClient.publish(topic, message);
 
     Serial.println();
   }
 }    
 ```
 
+## Prueba
 
+Inicialmente vamos a realizar las pruebas basicas siguiendo los siguientes pasos:
+1. Descargue el programa en el ESP32 y teniendo en cuenta que el broker se encuentra funcionando, al abrir el monitor serial para el ESP32, el resultado se vera similar al mostrado a continuación:
+   
+   ![monitor_serial1](mqtt_temp_output.png)
 
+   De acuerdo a los mensajes de log mostrados se puede notar, que el cliente se logro enganchar y por lo tanto, cualquier otro cliente que se suscriba al mismo topic del ESP32, recibirá los mensajes con la información de la temperatura publicados por este.
 
-----
-
-Para comprender una implementación de una red MQTT sencilla vamos a plantear el caso de prueba mostrado en la siguiente figura:
-
-![caso_test](mqtt_caso.png)
-
-El objetivo en este caso es simular la implementación del control de iluminación de una oficina mediante MQTT. La siguiente tabla describe cada uno de los clientes de la red MQTT:
-
-
-
-| Dispositivo | Cliente |Rol|Topic (message-topic)|Mensaje (message)|Observaciones|
-|---|---|---|---|---|---|
-| PC |C1|publisher| ```home/office/lamp```|<ul><li>```ON```<li>```OFF```</ul>|<ul><li>**```ON```**: Comando con el que se prende la luz de la oficina.<li>**```OFF```**: Comando con el que se prende la luz de la oficina.</ul>|
-|C2|ESP32|susbcriber|```home/office/lamp```|```---```|Cuando se recibe el comando **```ON```** se enciende la lampara y cuando se recibe el comando **```OFF```** se apaga la lampara|
-
-Una vez que esta definido el caso de prueba vamos a realizar la puesta en marcha de manera gradual en dos fases tal y como se describirá a continuación:
-
-### Fase 1 - Pruebas en el PC
-
-Inicialmente vamos a realizar las pruebas basicas del caso de uso empleando las aplicaciones de escritorio. Asumiendo que el broker y los clientes se encuentran en la misma maquina, vamos a realizar los siguientes pasos:
-
-1. Arrancar el broker ejecutando el comando:
+2. Si el broker se encuentra detenido, arrancarlo ejecutando el comando:
    
    ```
    mosquito
@@ -471,328 +488,24 @@ Inicialmente vamos a realizar las pruebas basicas del caso de uso empleando las 
 
    ![mosquitto](mosquitto_windows.png)
 
-2. Desde otra terminal, arrancar el cliente suscriptor:
-   
+3. Usando una terminal independiente, arrancar el cliente suscrito a los **topicos** que deseamos analizar,  para verificar que los mensajes se estan recibiendo. En este ejemplo,sea abrió un cliente suscrito al topic **```/home/room/temperature```**:
+
    ```
-   mosquito_sub -t /home/office/lamp
+   mosquito_sub -t /home/room/temperature
    ```
 
    La siguiente figura muestra el resultado:
 
-   ![mosquito_sub](mosquito_sub.png)
+   ![mosquito_sub](mosquito_sub_client.png)
 
-3. Empleando una nueva terminal, enviar el comandos y visualizar el resultado en la terminal asociada al suscriptor:
-   
+Otra forma de hacer debug, es por medio de clientes que tienen interfacez graficas mas amigables. En la siguiente figura de muestra el ejemplo que se realizo empleando el **MQTT Explorer**. Primero conectamos el MQTT explorer al Broker local:
 
-   ```
-   mosquito_pub -t /home/office/lamp -m ON
-   mosquito_pub -t /home/office/lamp -m OFF
-   ```
+![mqtt_explorer_init](mqtt_explorer.png)
 
-   El resultado se muestra a continuación:
+Luego, procedermos analizar el topic de interes:
 
-   ![mosquitto_pub](mosquito2.png)
+![mqtt_explorer](mqtt_explorer_temp.png)
 
-Como se puede evidenciar, la red MQTT funciona. Como segunda parte, vamos a implementar el cliente suscritor en el ESP32. 
-
-### Fase 2 - Implementación de un cliente en la ESP
-
-Para saber como implementar un cliente en la ESP32, es necesario consultar la documentación del API **EspMQTTClient** en el siguiente [link](https://github.com/plapointe6/EspMQTTClient). 
-
-A continuación vamos a explorar como realizar la implementación usando una plantilla lo mas general posible (para ver un ejemplo paso a paso ver el siguiente [link](https://hackmd.io/@fablabbcn/rydUz5cqv)):
-
-```ino
-/* ----- Include Libraries ----- */
-#include <WiFi.h>
-#include <PubSubClient.h>
-
-/* ------ Wifi ------ */
-const char* ssid = "SSID-AP";   // name of your WiFi network
-const char* password = "PASS_AP"; // password of the WiFi network
-WiFiClient wifiClient;
-
-/* ----- MQTT Network ----- */
-const char* mqttBroker = "192.168.1.50";; // IP address of your MQTT broker eg. 192.168.1.50
-
-const char *ID = "id_thing";  // Name of our device, must be unique
-
-// Topics
-const char *topic1 = "topic1_name"; 
-const char *topic2 = "topic2_name"; 
-...
-
-// Setup MQTT client
-PubSubClient mqttclient(wclient); 
-
-/* ----- Ports ----- */
-// Code...
-...
-
-/* ----- Variables ----- */
-// Code...
-...
-
-/* ----- Helper funtions ----- */
-
-// Connect fuction
-void mqttConnect() {
-  // Loop until we're reconnected
-  while (!mqttClient.connected()) {
-    Serial.print("Attempting MQTT connection...");
-    if (mqttClient.connect(ID)) {
-      Serial.println("OK");
-    
-      // Topic(s) subscription
-      mqttClient.subscribe(topic1);
-      ...
-
-    } else {     
-      // Retry connection
-      Serial.print("failed, rc=");
-      Serial.print(mqttClient.state());
-      Serial.println(" try again in 5 seconds");
-      delay(5000);    
-    }
-  }
-}
-
-// Subscription callback
-void callback(char* topic, byte* message, unsigned int length) {
-   // Code...
-   ...
-}
-
-// Ports Setup
-void setup_ports() {
-  // Code...
-  ...
-}
-
-// Wifi conection
-void setup_wifi() {
-  Serial.print("\nConnecting to ");
-  Serial.println(ssid);
-
-  WiFi.begin(ssid, password); // Connect to network
-
-  while (WiFi.status() != WL_CONNECTED) { // Wait for connection
-    delay(500);
-    Serial.print(".");
-  }
-
-  Serial.println();
-  Serial.println("WiFi connected");
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
-}
-
-
-/* ----- Main funtions ----- */
-
-// setup
-void setup() {
-  // Setup ports
-  setup_ports();
-  // Serial setup
-  Serial.begin(115200);
-
-  // Setup wifi
-  setup_wifi();
-
-  // MQTT setup
-  mqttClient.setServer(mqttBroker, 1883);
-  mqttClient.setCallback(callback);
-}
-
-// loop
-void loop() {
-  // Check if we are still connected to the MQTT broker
-  if (!mqttClient.connected()) {
-    mqttConnect();
-  }
-  // Let PubSubClient library do his magic
-  mqttClient.loop();
-
-  // Publish based on events
-  //Code...
-  ...
-}
-```
-
-Antes de adaptar la plantilla a nuestro ejemplo, es necesario conocer la información solicitada en la siguiente tabla:
-
-|Dato|Variable plantilla|Valor|
-|---|---|---|
-|IP del broker|```mqttBroker```|Consultar la IP con el comando ```ifconfig``` o ```ipconfig```|
-|SSID AP|```ssid```|Elegir el access point de la red|
-|Pasword AP|```password```|Consultar el password del access point o dejar el valor vacio si no tiene|
-
-
-Teniendo en cuenta la plantilla anterior, si la adaptamos de acuerdo a la logica del caso de uso el resultado será el mostrado a continuación:
-
-```ino
-/* ----- Include Libraries ----- */
-#include <WiFi.h>
-#include <PubSubClient.h>
-
-/* ------ Wifi ------ */
-const char* ssid = "SSID_AP";   // name of your WiFi network
-const char* password = "PASS_AP"; // password of the WiFi network
-WiFiClient wifiClient;
-
-/* ----- MQTT Network ----- */
-const char* mqttBroker = "192.168.1.50"; // IP address of your MQTT broker eg. 192.168.1.50
-
-const char *ID = "001";  // Name of our device, must be unique
-
-// Topics
-const char *topic = "home/office/lamp";  // Topic to subcribe to
-
-
-// Setup MQTT client
-PubSubClient mqttClient(wifiClient); 
-
-/* ----- Ports ----- */
-const byte LIGHT_PIN = LED_BUILTIN;           // Pin to control the light
-
-
-/* ----- Variables ----- */
-
-
-/* ----- Helper funtions ----- */
-
-// Connect fuction
-void mqttConnect() {
-  // Loop until we're reconnected
-  while (!mqttClient.connected()) {
-    Serial.print("Attempting MQTT connection...");
-    if (mqttClient.connect(ID)) {
-      Serial.println("OK");
-    
-      // Topic(s) subscription
-      mqttClient.subscribe(topic);
-
-    } else {     
-      // Retry connection
-      Serial.print("failed, rc=");
-      Serial.print(mqttClient.state());
-      Serial.println(" try again in 5 seconds");
-      delay(5000);    
-    }
-  }
-}
-
-// Subscription callback
-void callback(char* topic, byte* payload, unsigned int length) {
-  String response;
-
-  for (int i = 0; i < length; i++) {
-    response += (char)payload[i];
-  }
-  Serial.print("Message arrived [");
-  Serial.print(topic);
-  Serial.print("] ");
-  Serial.println(response);
-  if(response == "ON")  // Turn the light on
-  {
-    digitalWrite(LIGHT_PIN, HIGH);
-  }
-  else if(response == "OFF")  // Turn the light off
-  {
-    digitalWrite(LIGHT_PIN, LOW);
-  }
-}
-
-
-// Ports Setup
-void setup_ports() {
-  pinMode(LIGHT_PIN, OUTPUT); // Configure LIGHT_PIN as an output
-}
-
-
-// Wifi conection
-void setup_wifi() {
-  Serial.print("\nConnecting to ");
-  Serial.println(ssid);
-
-  WiFi.begin(ssid, password); // Connect to network
-
-  while (WiFi.status() != WL_CONNECTED) { // Wait for connection
-    delay(500);
-    Serial.print(".");
-  }
-
-  Serial.println();
-  Serial.println("WiFi connected");
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
-}
-
-
-/* ----- Main funtions ----- */
-
-// setup
-void setup() {
-  // Setup ports
-  setup_ports();
-  // Serial setup
-  Serial.begin(115200);
-  delay(100);
-  // Setup wifi
-  setup_wifi();
-  // MQTT setup
-  mqttClient.setServer(mqttBroker, 1883);
-  mqttClient.setCallback(callback);
-}
-
-// loop
-void loop() {
-  // Check if we are still connected to the MQTT broker
-  if (!mqttClient.connected()) {
-    mqttConnect();
-  }
-  // Let PubSubClient library do his magic
-  mqttClient.loop();
-}
-```
-
-Para realizar la prueba, se procede de manera similar solo que esta vez, el cliente que suscribe (recibe los comandos) es la ESP32 la cual; en este caso, dependiendo si se envia el comando **ON** o **OFF** prenderá o apagará el led que viene integrado a esta. 
-
-Una vez que se descargue la aplicación en el ESP32 y teniendo en cuenta que el broker se encuentra funcionando, al abrir el monitor serial del Arduino IDE, el resultado se vera similar al mostrado a continuación:
-
-![monitor_serial1](monitor_serial1.png)
-
-De acuerdo a los mensajes de log mostrados se puede notar, que el cliente se logro enganchar y por lo tanto, esta listo para recibir los comandos que enviados desde cualquier otro cliente que publique al mismo **topic**. Para esto, desde una terminal empleando el **mosquitto_pub** procedemos a enviar los comandos para prender y apagar la luz tal y como se muestra en la siguiente figura:
-
-![test_mosquito](test_mosquito.png)
-
-Si todo esta bien, el led de la placa ESP32 se deben encender y apagar; asi mismo, según el programa, el monitor serial debe mostrar información sobre este evento lo cual se corrobora en la siguiente figura:
-
-![monitor_serial2](monitor_serial2.png)
-
-## Ejemplos de aplicación
-
-### Ejemplo 1 - Control de la luz de una oficina
-
-Control de encendido y apagado de luz empleando MQTT ([link ejemplo 1](ejemplo_1/README.md)).
-
-![interfaz](interfaz_mqtt.png)
-
-### Ejemplo 2 - Smart Home 
-
-Interfaz grafica para el monitoreo y control de un hogar. El repo principal con el modelo actualizado se encuentra en el siguiente [link](https://github.com/jilopezv/IoT/tree/newModel). La arquitectura que se implementa aqui es la mostrada en la siguiente figura:
-
-![arquitectura](arquitectura.jpg)
-
-En esta ejemplo solo se aborda una pequeña parte de este proyecto la cual es puede encontrar en el [link ejemplo 2](ejemplo_2/README.md).
-
-La interfaz de la casa completa (con algunas funciones deshabilidatas de muestra a continuación)
-
-![main_ui](main_ui.png)
-
-La interfaz de la sala se muestra a continuación:
-
-![living-room_ui](living-room_ui.png)
 
 > **Nota**
 > Todo esto, aun se encuentra en construcción. Disculpas por las molestias causadas...
@@ -847,3 +560,7 @@ La interfaz de la sala se muestra a continuación:
 * https://abstractexpr.com/2023/06/29/structures-in-c-from-basics-to-memory-alignment/
 * https://deepbluembedded.com/esp32-adc-tutorial-read-analog-voltage-arduino/
 * https://www.hivemq.com/blog/sparkplug-essentials-part-3-poll-response/
+* https://docs.arduino.cc/tutorials/mkr-1000-wifi/mkr-1000-mqtt-device-to-device
+* https://diyodemag.com/education/what_the_tech_how_mqtt_works
+* http://www.linux-magazine.com/Issues/2022/262/Home-Assistant-with-MQTT
+* 
