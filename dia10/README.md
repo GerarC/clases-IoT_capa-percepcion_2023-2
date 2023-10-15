@@ -469,7 +469,16 @@ void loop() {
 }    
 ```
 
+La siguiente figura resume la implementación realizada para el el ESP32 pueda transmitir la temperatura usando MQTT:
+
+![mqtt_red](mqtt_ejemplo_temp-all.png)
+
+
 ## Prueba
+
+Para realizar el debug de la **cosa** (ESP32 que transmite la temperatura), vamos a realizar la siguiente implementación conectando un segundo cliente que despliegue los mensajes enviados por el ESP32. La red MQTT tendra para el caso la siguienete forma:
+
+![mqtt_red_debug](mqtt_ejemplo-all_debug.png)
 
 Inicialmente vamos a realizar las pruebas basicas siguiendo los siguientes pasos:
 1. Descargue el programa en el ESP32 y teniendo en cuenta que el broker se encuentra funcionando, al abrir el monitor serial para el ESP32, el resultado se vera similar al mostrado a continuación:
@@ -498,7 +507,11 @@ Inicialmente vamos a realizar las pruebas basicas siguiendo los siguientes pasos
 
    ![mosquito_sub](mosquito_sub_client.png)
 
-Otra forma de hacer debug, es por medio de clientes que tienen interfacez graficas mas amigables. En la siguiente figura de muestra el ejemplo que se realizo empleando el **MQTT Explorer**. Primero conectamos el MQTT explorer al Broker local:
+Otra forma de hacer debug, es por medio de clientes que tienen interfacez graficas mas amigables. En la siguiente figura de muestra el ejemplo que se realizo empleando el **MQTT Explorer** tal y como se muestra en el siguiente esquema:
+
+![mosquito_sub](mqtt_ejemplo-all_debug_MQTT-Explorer.png)
+
+Primero conectamos el MQTT explorer al Broker local:
 
 ![mqtt_explorer_init](mqtt_explorer.png)
 
@@ -506,6 +519,21 @@ Luego, procedermos analizar el topic de interes:
 
 ![mqtt_explorer](mqtt_explorer_temp.png)
 
+Como vemos en la figura anterior, los resultados son similares.
+
+## Simulación
+
+En construcción...
+
+## Actividad
+
+Hagalo usted mismo replicando el proceso anteriormente mostrado. Para ello descargue el codigo del proyecto implementado en platformio **ESP32_Temp-NTC_MQTT** ([link](ESP32_Temp-NTC_MQTT.zip)), modifiquelo de acuerdo con los parametros de la red y observe el programa.
+
+## Ejemplos
+
+A continuación se muestran algunos ejemplos adicionales en los cuales se usa el protocolo MQTT.
+1. **Ejemplo 1**: Encendido y apagado de una lampara empleando el protocolo MQTT. ([link](ejemplo1/README.md))
+2. **Ejemplo 2**: Comunicación entre dos...
 
 > **Nota**
 > Todo esto, aun se encuentra en construcción. Disculpas por las molestias causadas...
