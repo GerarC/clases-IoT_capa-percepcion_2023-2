@@ -2,12 +2,12 @@ import paho.mqtt.client as mqtt
 import time
 
 # Variables de la aplicacion
-BROKER_IP = "127.0.0.1"
-TOPIC = "room/light"
+BROKER_IP = "test.mosquitto.org"
+TOPIC = "home/office/lamp"
 
 # Comandos
-messLampOn = "on"
-messLampOff = "off"
+messLampOn = "ON"
+messLampOff = "OFF"
 
 # Mensajes
 messReceibed = False
@@ -26,6 +26,7 @@ mqtt_client.connect(BROKER_IP, 1883, 60)
 # 3. Llamando el loop para mantener el flujo de trafico de red en el broker
 # 4. No se llevo a cabo en este caso.
 mqtt_client.loop_start()
+time.sleep(2) # Para esperar que la conexion se establezca antes de desplegar el menu
 
 print("SISTEMA DE CONTROL DE LA LAMPARA DE LA SALA")
 while True:
