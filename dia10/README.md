@@ -84,8 +84,240 @@ Sin embargo a continuación se explica como se realiza el procedimiento paso a p
 
 Si todo esta bien, ya es posible, para este proyecto, codificar programas que permitan la comunicación de la ESP32 por medio del protocolo MQTT usand platformio.
 
+### Pasos para implementar el protocolo MQTT en el ESP32
 
-## Caso de prueba
+Una vez instaladas las librerias necesarias en el IDE, el suguiente paso consiste en la codificación de la aplicación. A continuación, se detallan los pasos para la implementación de la aplicación:
+1. Definir el hardware que se usara para la **cosa**, esto implica definir:
+   * Lista de componentes.
+   * El esquematico.
+   * El diagrama de conexión.
+
+2. Instalar en el IDE, las librerias externas necesarias para la aplicación: 
+   
+   |#|Libreria|Observaciones|
+   |---|---|---|
+   |1|PubSubClient|Libreria que implementa el protocolo MQTT|
+   |...|...|...|
+   |N|Libreria N|Información sobre la libreria|
+
+3. Definir los parametros de configuración Wifi de la cosa:
+   
+   |Parametro|Valor|
+   |---|---|
+   |SSID|```"<SSID>"```|
+   |PASSWORD|```"<PASSWORD>"```|
+
+4. Definir los elementos de configuración asociados al protocolo MQTT de la **cosa**: 
+   
+   |Parametro|Valor|
+   |---|---|
+   |BROKER|```"<IP_BROKER>"```|
+   |PASSWORD|```"<PASSWORD>"```|
+   |ID|```"<ID_THING>"```|
+   
+5. Definir los topicos y los mensajes asociados a la **cosa** y determinar el rol de la **cosa** respecto al tópico.  
+   
+   |#|Topico|Mensaje|Descripción|Rol (S/P)|
+   |---|---|---|---|---|
+   |1|```topic1```|```estructura_mensaje1```|Decripción del comando asociado al ```topic1```|```S/P``` segun sea el caso|
+   |2|```topic2```|```estructura_mensaje2```|Decripción del comando asociado al ```topic2```|```S/P``` segun sea el caso|
+   |**...**|...|...|...|
+   |N|```topicN```|```estructura_mensajeN```|Decripción del comando asociado al ```topicN```|```S/P``` segun sea el caso|
+
+6. Crear las variables y objetos necesarios para la implementación de la aplicación y realizar la implementación de la inicialización (```setup()```) y de la logica de la aplicación (```loop()```):
+   
+   ```cpp
+   #include <Wifi.h>
+   #include <PubSubClient.h>
+   
+  
+   /* ----- Puertos ----- */
+   // Definicion de los pines
+   ...
+   
+
+   /* ----- Wifi ----- */
+   const char* ssid = "SSID-AP";   // name of your WiFi network
+   const char* password = "PASS_AP"; // password of the WiFi network
+   WiFiClient wifiClient;
+ 
+   /* ----- MQTT ----- */
+   const char* mqttBroker = "IP_BROKER"; // IP address of your MQTT 
+   const char *ID = "id_thing";  // Name of our device, must be unique
+   // Topics
+   const char *topic1 = "topic1_name"; 
+   const char *topic2 = "topic2_name";  
+   // Setup MQTT client
+   PubSubClient mqttclient(wclient); 
+
+   /* ----- Variables del programa ----- */
+   // Variables y constantes asociadas al programa
+   const int PORT_SPEED = 9600; 
+   ...
+
+   
+   /* ----- Helper Functions ----- */   
+  
+   // --- Ports Setup ---
+   void setup_ports() {
+     // Codigo de inicialización de los puertos
+     ...
+   }
+
+   // --- MQTT ---
+   void mqttConnect() {
+     // Loop until we're reconnected
+     while (!mqttClient.connected()) {
+       Serial.print("Attempting MQTT connection...");
+       if (mqttClient.connect(ID)) {
+         Serial.println("OK");
+         // Topic(s) subscription
+         mqttClient.subscribe(topic1);
+         ...
+
+       } 
+       else {     
+         // Retry connection
+         Serial.print("failed, rc=");
+         Serial.print(mqttClient.state());
+         Serial.println(" try again in 5 seconds");
+         delay(5000);    
+       }
+     }
+   }
+
+   // Subscription callback 
+   void callback(char* topic, byte* message, unsigned int length) {
+     // Code...
+     ...
+   }
+  
+   // --- Wifi ---
+   
+   // Wifi conection
+   void setup_wifi() {
+     Serial.print("\nConnecting to ");
+     Serial.println(ssid);
+
+     WiFi.begin(ssid, password); // Connect to network
+
+     while (WiFi.status() != WL_CONNECTED) { // Wait for connection
+       delay(500);
+       Serial.print(".");
+     }
+
+     Serial.println();
+     Serial.println("WiFi connected");
+     Serial.print("IP address: ");
+     Serial.println(WiFi.localIP());
+   }
+
+   // 
+   void init_XXX() {
+     // Codigo de inicializacion de componente XXX
+   }
+   
+   /* ----- Main funtions ----- */
+   ...
+
+   
+   // ----
+   void setup() {
+     // Setup ports
+     setup_ports();
+     // Serial setup
+     Serial.begin(PORT_SPEED);
+     // Setup wifi
+     setup_wifi();
+
+     // MQTT setup
+     mqttClient.setServer(mqttBroker, 1883);
+     mqttClient.setCallback(callback);
+   }
+  
+   // loop
+   void loop() {
+    // Check if we are still connected to the MQTT broker
+    if (!mqttClient.connected()) {
+      mqttConnect();
+    }
+    // Let PubSubClient library do his magic
+    mqttClient.loop();
+
+    // Publish based on events
+    //Code...
+    ...
+    
+   }    
+   ```
+
+Si desea profundizar un poco sobre esto, le recomendamos mirar los siguientes tutoriales:
+* **Curso de MQTT** ([link](https://www.luisllamas.es/curso-mqtt/))
+* **MQTT Protocol Guide: Everything You Need to Know** ([link](https://cedalo.com/blog/complete-mqtt-protocol-guide/))
+* **Getting Started with MQTT and Arduino** ([link](https://cedalo.com/blog/mqtt-and-arduino-setup-guide/))
+* **Step-by-Step Tutorial on Enabling MQTT on ESP32 Module** ([link](https://cedalo.com/blog/enabling-esp32-mqtt/))
+* **ss**
+
+### Caso de prueba
+
+Supongamos que se nos da el siguiente problema: Se desea implementar un programa en una ESP32 que mida la temperatura y que envie este valor, de manera periodica, cada 5 segundos empleando MQTT.
+
+1. **Hardware**:
+   
+   * **Lista de componentes**:
+   
+     |#|Elemento|Cantidad|
+     |--|--|--|
+     |1|ESP32|1|
+     |2|KY-013 ANALOG TEMPERATURE SENSOR MODULE|1|
+
+   * **Esquematico**:
+
+     ![ESP32-temperatura-sch](ESP32-temperatura_sch.png)
+
+   * **Conexión**:
+     
+     ![ESP32-temperatura-bb](ESP32-temperatura_bb.png)
+
+2. **Librerias**: 
+   
+   |#|Libreria|Observaciones|
+   |---|---|---|
+   |1|PubSubClient|Libreria que implementa el protocolo MQTT|
+
+3. **Parametros WiFi**:
+   
+   |Parametro|Valor|
+   |---|---|
+   |SSID|```"<SSID>"```|
+   |PASSWORD|```"<PASSWORD>"```|
+
+4. **Parametros MQTT**: 
+   
+   |Parametro|Valor|
+   |---|---|
+   |BROKER|```"<IP_BROKER>"```|
+   |PASSWORD|```"<PASSWORD>"```|
+   |ID|```"<ID_THING>"```|
+   
+5. **Topicos**.  
+   
+   |#|Topico|Mensaje|Descripción|Rol (S/P)|
+   |---|---|---|---|---|
+   |1|```/home/room/temperature```|```temp```|```temp``` corresponde al valor de la tempertatura enviado|```P```|
+   
+6. **Código**: Los diagramas mostrados a continuación (tomados de [link](https://cedalo.com/blog/mqtt-and-arduino-setup-guide/)) resume la implementación del codigo que sera codificado en el ESP32:
+
+
+   **Inicialización**:
+
+   ![init_flow](init_flow.png)
+
+   **Loop**:
+
+   ![loop_flow](loop_flow.png)
+
+----
 
 Para comprender una implementación de una red MQTT sencilla vamos a plantear el caso de prueba mostrado en la siguiente figura:
 
@@ -210,7 +442,6 @@ void setup_ports() {
   // Code...
   ...
 }
-
 
 // Wifi conection
 void setup_wifi() {
@@ -489,3 +720,4 @@ La interfaz de la sala se muestra a continuación:
 * https://learn.adafruit.com/search?q=All%2520the%2520Internet%2520of%2520Things
 * https://piolabs.com/blog/news/microsoft-leverages-platformio.html
 * https://abstractexpr.com/2023/06/29/structures-in-c-from-basics-to-memory-alignment/
+* https://deepbluembedded.com/esp32-adc-tutorial-read-analog-voltage-arduino/
