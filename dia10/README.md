@@ -310,7 +310,7 @@ Supongamos que se nos da el siguiente problema: Se desea implementar un programa
 
    **Inicialización**:
 
-   ![init_flow](init_flow.png)
+   ![init_flow](init_code.png)
 
    **Loop**:
 
