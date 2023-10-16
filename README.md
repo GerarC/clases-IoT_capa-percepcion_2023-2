@@ -13,4 +13,4 @@
 |7|14/09/2023|Clase 7 - Conexión por Wifi ([link](dia7/README.md))|
 |8|19/09/2023|Clase 8 - Manejo de interrupciones (incompleto...) ([link](dia8/README.md))|
 |9|21/09/2023|Clase 9 - Programación concurrentes (incompleto...) ([link](dia9/README.md))|
-|10|--/--/2023|Clase 10 - Protocolo MQTT (en construcción...) |
+|10|19/10/2023|Clase 10 - Protocolo MQTT (en construcción...) ([link](dia10/README.md))|
