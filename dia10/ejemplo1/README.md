@@ -72,7 +72,7 @@ Como el objetivo es que el ESP32 reciba comandos para encender y apagar el Led, 
 using namespace std;
 
 // ESP32 I/O config
-const int LIGHT_PIN = 2; // GPIO2 (LED_BUILTIN) 
+#define LIGHT_PIN 2
 
 // WiFi credentials
 const char *SSID = "IoT";
