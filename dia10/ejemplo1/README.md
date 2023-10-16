@@ -1,37 +1,197 @@
 # Ejemplo 1
 
-Para comprender una implementación de una red MQTT sencilla vamos a plantear el caso de prueba mostrado en la siguiente figura:
+Realizar una implementación sencilla que permita el encedido y apagado del led integrado al ESP32. Tal y como se muestra en la siguiente figura.
 
 ![caso_test](mqtt_caso.png)
 
-El objetivo en este caso es simular la implementación del control de iluminación de una oficina mediante MQTT. La siguiente tabla describe cada uno de los clientes de la red MQTT:
+## Thing - ESP32
 
-| Dispositivo | Cliente |Rol|Topic (message-topic)|Mensaje (message)|Observaciones|
-|---|---|---|---|---|---|
-| PC |C1|publisher| ```home/office/lamp```|<ul><li>```ON```<li>```OFF```</ul>|<ul><li>**```ON```**: Comando con el que se prende la luz de la oficina.<li>**```OFF```**: Comando con el que se prende la luz de la oficina.</ul>|
-|C2|ESP32|susbcriber|```home/office/lamp```|```---```|Cuando se recibe el comando **```ON```** se enciende la lampara y cuando se recibe el comando **```OFF```** se apaga la lampara|
+### Red MQTT
 
-Una vez que esta definido el caso de prueba vamos a realizar la puesta en marcha de manera gradual en dos fases tal y como se describirá a continuación...
+Para este caso, el **topic tree** a implementar es el siguiente:
 
-## Hardware
+![topic_tree](topic_tree-ejemplo1.png)
 
-### Lista de componentes
+Como el objetivo es que el ESP32 reciba comandos para encender y apagar el Led, la implementación de la red MQTT, para este caso, tendra la siguiente forma:
 
-|Elemento |Descripcion |
-|1 | Placa de desarrollo ESP32|
+![red_mqtt](mqtt-ejemplo1.png)
 
-### Conexión
+### Configuración de la cosa
 
-A continuación se muestra el diagrama de conexión de la cosa (thing) la cual esta implementada en un ESP32.
+1. **Hardware**:
+   
+   * **Lista de componentes**:
+   
+     |#|Elemento|Cantidad|
+     |--|--|--|
+     |1|ESP32|1|
 
-![ESP32_ejemplo1-bb](ESP32_ejemplo1_bb.png)
+   * **Esquematico**:
 
-El esquematico se muestra a continuación:
+     ![ESP32-sch](ESP32_ejemplo1_sch.png)
 
-![ESP32_ejemplo1-sch](ESP32_ejemplo1_sch.png)
+   * **Conexión**:
+     
+     ![ESP32-bb](ESP32-ESP32_ejemplo1_bb.png)
+
+2. **Librerias**: 
+   
+   |#|Libreria|Observaciones|
+   |---|---|---|
+   |1|PubSubClient|Libreria que implementa el protocolo MQTT|
+
+3. **Parametros WiFi**:
+   
+   |Parametro|Valor|
+   |---|---|
+   |SSID|```"IoT"```|
+   |PASSWORD|```"1245678h"```|
+
+4. **Parametros MQTT**: 
+   
+   |Parametro|Valor|
+   |---|---|
+   |BROKER|```"test.mosquitto.org"```|
+   |ID|```"thing-001"```|
+   
+5. **Topicos**:
+   
+   |#|Topico|Mensaje|Descripción|Rol (S/P)|
+   |---|---|---|---|---|
+   |1|```home/office/lamp```|```cmd```|```cmd``` corresponde al comando enviado para encender (```"ON"```) o apagar el led ```"OFF"```.|```S```|
+   
+
+6. **Código**:
+
+**Header**: config.h
+
+```h
+#pragma once
+#include <string>
+
+using namespace std;
+
+// ESP32 I/O config
+const int LIGHT_PIN = 2; // GPIO2 (LED_BUILTIN) 
+
+// WiFi credentials
+const char *SSID = "IoT";
+const char *PASSWORD = "1245678h";
+
+// MQTT settings
+const string ID = "thing-001";
+
+const string BROKER = "192.168.43.55";
+const string CLIENT_NAME = ID + "lamp_client";
+
+const string TOPIC = "home/office/lamp";
+```
+
+**Archivo main**: main.cpp
+
+```cpp
+#include <Arduino.h>
+#include <WiFi.h>
+#include <PubSubClient.h>
+
+#include "config.h"
+
+WiFiClient espClient;
+PubSubClient client(espClient); // Setup MQTT client
+
+// --- ESP32
+
+void setup_ports() {
+  pinMode(LIGHT_PIN, OUTPUT); // Configure LIGHT_PIN as an output
+}
 
 
-## Software implementado
+// ---- Wifi
+
+void connectWiFi() {
+  Serial.print("Connecting to ");
+  Serial.print(SSID);
+  while (WiFi.status() != WL_CONNECTED) {   
+    Serial.print(".");
+    WiFi.begin(SSID, PASSWORD);
+    delay(500);
+  }
+  Serial.println();
+  Serial.print(ID.c_str());
+  Serial.println(" connected!");
+  Serial.print("IP address: ");
+  Serial.println(WiFi.localIP());
+}
+
+// ---- MQTT
+
+
+// Handle incomming messages from the broker
+void clientCallback(char* topic, byte* payload, unsigned int length) {
+  String response;
+
+  for (int i = 0; i < length; i++) {
+    response += (char)payload[i];
+  }
+  Serial.print("Message arrived [");
+  Serial.print(TOPIC.c_str());
+  Serial.print("] ");
+  Serial.println(response);
+  if(response == "ON")  // Turn the light on
+  {
+    digitalWrite(LIGHT_PIN, HIGH);
+  }
+  else if(response == "OFF")  // Turn the light off
+  {
+    digitalWrite(LIGHT_PIN, LOW);
+  }
+}
+
+void reconnectMQTTClient() {
+  while (!client.connected()) {
+    Serial.println("Attempting MQTT connection...");
+    if (client.connect(CLIENT_NAME.c_str())) {
+      Serial.print("connected to Broker: ");
+      Serial.println(BROKER.c_str());
+      // Topic(s) subscription
+      client.subscribe(TOPIC.c_str());
+    }
+    else {
+      Serial.print("Retying in 5 seconds - failed, rc=");
+      Serial.println(client.state());
+      delay(5000);
+    }
+  }
+}
+
+void createMQTTClient() {
+  client.setServer(BROKER.c_str(), 1883);
+  client.setCallback(clientCallback);
+  reconnectMQTTClient();
+}
+
+void setup() {
+  // Setup ports
+  setup_ports();
+  // Serial setup
+  Serial.begin(9600);
+  while (!Serial)
+    ; // Wait for Serial to be ready
+  delay(1000);
+  connectWiFi();
+  createMQTTClient();
+}
+
+void loop() {
+  reconnectMQTTClient();
+  client.loop();
+  delay(1000);
+}
+```
+
+
+
+---
 
 Aca va la descripción del codigo...
 
