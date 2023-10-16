@@ -1,7 +1,88 @@
 # Ejemplo 2
 
+Realizar una implementación sencilla de una alarma la cual tiene la siguiente forma:
 
-### Thing 1 - ESP-PIR (Simulacion)
+![](mqtt-ejemplo2.png)
+
+La siguiente figura:
+
+|Thing|Observaciones|
+|---|---|
+|**```thing-001```**|Cosa conectada a un sensor PIR para detectar presencia. Cuando la presencia es detectada envia un comando por MQTT para indicar la presencia a una alarma que se encuentra en otro lugar|
+|**```thing-002```**|Cosa conectada a un buzzer, esta implementa una alarma sonora que indica la presencia de una persona al recibir un comando desde la cosa que esta conectada al sensor PIR|
+
+Tal y como se muestra en la figura, el broker se encuentra ejecutandose en un computador el cual se encuentra en la misma red local donde se conectan las cosas.
+
+## Implentación de las cosas
+
+### Red MQTT
+
+Para este caso, el **topic tree** a implementar es el siguiente:
+
+![topic_tree](topic_tree-ejemplo2.png)
+
+### Thing 1 - ESP-PIR 
+
+1. **Hardware**:
+   
+   * **Lista de componentes**:
+   
+     |#|Elemento|Cantidad|
+     |--|--|--|
+     |1|ESP32|1|
+     |2|HC-SR501 PIR MOTION SENSOR (kit Elegoo)|1|
+
+   * **Esquematico**:
+
+     ![ESP32-sch](ESP32-PIR_sch.png)
+
+   * **Conexión**: Ojo, en el kit elegoo los pines **Vcc** y el **GND** son los opuestos a los mostrados en la siguiente figura:
+     
+     ![ESP32-bb](ESP32-PIR_bb.png)
+
+2. **Librerias**: 
+   
+   |#|Libreria|Observaciones|
+   |---|---|---|
+   |1|PubSubClient|Libreria que implementa el protocolo MQTT|
+   |2|ArduinoJsON ([link](https://arduinojson.org/))|Libreria para manejar información en formato JSON|
+
+3. **Parametros WiFi**:
+   
+   |Parametro|Valor|
+   |---|---|
+   |SSID|```"IoT"```|
+   |PASSWORD|```"1245678h"```|
+
+4. **Parametros MQTT**: 
+   
+   |Parametro|Valor|
+   |---|---|
+   |BROKER|```"192.168.43.55"```|
+   |ID|```"thing-001"```|
+   
+5. **Topicos**:
+   
+   |#|Topico|Mensaje|Descripción|Rol (S/P)|
+   |---|---|---|---|---|
+   |1|```store/sensor/pir```|```{"alarm":cmd}```|```cmd``` corresponde un valor entero que indica presencia (```1```) o ausencia (```0```) de personas.|```P```|
+   
+
+6. **Código**:
+
+**Archivo de configuración**: platformio.ini
+
+```ini
+[env:nodemcu-32s]
+platform = espressif32
+board = nodemcu-32s
+framework = arduino
+lib_deps = 
+	bblanchon/ArduinoJson@^6.21.3
+	knolleary/PubSubClient@^2.8
+```
+
+**Header**: config.h
 
 ```h
 #pragma once
@@ -11,26 +92,29 @@
 using namespace std;
 
 // ESP32 I/O config
-// Alarm
-const byte LIGHT_PIN = LED_BUILTIN; 
 
+// Alarm
+#define LIGHT_PIN 2 
 // PIR
-const byte PIR_MOTION_SENSOR = 5; // GPIO5
+#define PIR_MOTION_SENSOR 5
 
 // WiFi credentials
-const char *SSID = "Wokwi-GUEST";
-const char *PASSWORD = "";
+const char *SSID = "IoT";
+const char *PASSWORD = "1245678h";
 
 // MQTT settings
 const string ID = "thing-001";
 
-const string BROKER = "test.mosquitto.org";
+const string BROKER = "192.168.43.55";
 const string CLIENT_NAME = ID + "ESP32-PIR";
 
 const string TOPIC = "store/sensor/pir";
 ```
 
+**Archivo main**: main.cpp
+
 ```cpp
+#include <Arduino.h>
 #include <WiFi.h>
 #include <ArduinoJson.h>
 #include <PubSubClient.h>
@@ -74,8 +158,6 @@ void setup_ports() {
   pinMode(LIGHT_PIN, OUTPUT); 
   pinMode(PIR_MOTION_SENSOR, INPUT); 
 }
-
-
 
 // ---- Wifi
 
@@ -154,10 +236,92 @@ void loop() {
 }
 ```
 
-### Thing 2 - ESP-ALARM (Simulacion)
+#### Debug de la Thing 1 - ESP-PIR 
 
+La siguiente figura muestra el debug realizado para verificar que la **cosa** funciona bien:
 
-**Archivo**: config.h
+![debug_pir](mqtt-ejemplo2-debug_pir.png)
+
+La salida del monitor serial para ESP32 se muestra a continuación:
+
+![serial_pir](ejemplo_pir_serial_output.png)
+
+La siguiente tabla resume los comandos empleados para realizar el debug de esta cosa:
+
+|Acción|Comando mosquito|
+|---|---|
+|Observación del comando enviado desde el ESP32|```mosquitto_sub -t store/sensor/pir```|
+
+La salida del anterior comando, varia según se detecte o no la presencia:
+
+![mosquitto_debud_pir](mqtt_ejemplo2_debug_pir.png)
+
+La siguiente figura muestra el debug el ESP conectado al pir si se hubiera usado el MQTT explorer:
+
+![debug-pir_MQTT-explore](mqtt_ejemplo2_debug_pir-ESP-explorer.png)
+
+### Thing 2 - ESP-ALARM
+
+1. **Hardware**:
+   
+   * **Lista de componentes**:
+   
+     |#|Elemento|Cantidad|
+     |--|--|--|
+     |1|ESP32|1|
+     |2|PASSIVE BUZZER (kit Elegoo)|1|
+
+   * **Esquematico**:
+
+     ![ESP32-alarm-sch](ESP32-ALARM_sch.png)
+
+   * **Conexión**: 
+     
+     ![ESP32-alarm-bb](ESP32-ALARM_bb.png)
+
+2. **Librerias**: 
+   
+   |#|Libreria|Observaciones|
+   |---|---|---|
+   |1|PubSubClient|Libreria que implementa el protocolo MQTT|
+   |2|ArduinoJsON ([link](https://arduinojson.org/))|Libreria para manejar información en formato JSON|
+
+3. **Parametros WiFi**:
+   
+   |Parametro|Valor|
+   |---|---|
+   |SSID|```"IoT"```|
+   |PASSWORD|```"1245678h"```|
+
+4. **Parametros MQTT**: 
+   
+   |Parametro|Valor|
+   |---|---|
+   |BROKER|```"192.168.43.55"```|
+   |ID|```"thing-002"```|
+   
+5. **Topicos**:
+   
+   |#|Topico|Mensaje|Descripción|Rol (S/P)|
+   |---|---|---|---|---|
+   |1|```store/sensor/pir```|```{"alarm":cmd}```|```cmd``` corresponde un valor entero que indica presencia (```1```) o ausencia (```0```) de personas.|```S```|
+   
+
+6. **Código**:
+
+**Archivo de configuración**: platformio.ini
+
+```ini
+[env:nodemcu-32s]
+platform = espressif32
+board = nodemcu-32s
+framework = arduino
+lib_deps = 
+	bblanchon/ArduinoJson@^6.21.3
+	knolleary/PubSubClient@^2.8
+```
+
+**Header**: config.h
 
 ```h
 #pragma once
@@ -168,26 +332,27 @@ using namespace std;
 
 // ESP32 I/O config
 // Alarm
-const byte LIGHT_PIN = LED_BUILTIN; 
+#define LIGHT_PIN 2 
 // Buzzer
-const byte BUZZER_PIN = 5;
+#define BUZZER_PIN 5
 
 // WiFi credentials
-const char *SSID = "Wokwi-GUEST";
-const char *PASSWORD = "";
+const char *SSID = "IoT";
+const char *PASSWORD = "1245678h";
 
 // MQTT settings
 const string ID = "thing-002";
 
-const string BROKER = "test.mosquitto.org";
+const string BROKER = "192.168.43.55";
 const string CLIENT_NAME = ID + "ESP32-ALARM";
 
 const string TOPIC = "store/sensor/pir";
 ```
 
-**Archivo**: main.cpp
+**Archivo main**: main.cpp
 
 ```cpp
+#include <Arduino.h>
 #include <WiFi.h>
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
@@ -303,18 +468,44 @@ void loop() {
   delay(1000);
 }
 ```
+#### Debug de la Thing 2 - ESP-ALARM
+
+La siguiente figura muestra el debug realizado para verificar que la **cosa** funciona bien:
+
+![debug_alarm](mqtt-ejemplo2-debug_alarm.png)
+
+La salida del monitor serial para ESP32 se muestra a continuación:
+
+![serial_alarm](ejemplo_alarm_serial_output.png)
+
+La siguiente tabla resume los comandos empleados para realizar el debug de esta cosa:
+
+|Acción|Comando mosquito|
+|---|---|
+|Activar el buzzer enviando un comando que simula la presencia de alguien|```mosquitto_pub -t store/sensor/pir -m '{"alarm":1}' ```|
+|Desactivar el buzzer enviando un comando que simula que ya no hay nadie|```mosquitto_pub -t store/sensor/pir -m '{"alarm":0}' ```|
+|Observación de los comandos enviados al ESP32|```mosquitto_sub -t store/sensor/pir```|
+
+La salida al aplicar los comandos anteriores se muestra a continuación:
+
+![debug-alarma](mqtt_ejemplo2_debug_alarm.png)
+
+La siguiente figura muestra el debug de la alarma si se hubiera usado el MQTT explorer:
+
+![debug-alarma_MQTT-explore](mqtt_ejemplo2_debug_alarm-ESP-explorer.png)
+
+## Integración de las cosas
+
+Para hacer el debug completo de todo a la vez, se ponen a funcionar de manera simultanea todas las cosas y por medio de un cliente se puede observar el uso de mensajes entre las cosas implicadas:
+
+![debug](mqtt-ejemplo2-local-debug.png)
 
 ## Simulaciones
 
-**Thing 1 (ESP-PIR)**: [link](https://wokwi.com/projects/378574466884158465)
-**Thing 2 (ESP-ALARM)**: [link](https://wokwi.com/projects/378591120304957441)
-
-
-
+* **Thing 1 (ESP-PIR)**: [link](https://wokwi.com/projects/378574466884158465)
+* **Thing 2 (ESP-ALARM)**: [link](https://wokwi.com/projects/378591120304957441)
 
 ## Referencias
-
-
 
 * https://randomnerdtutorials.com/esp32-date-time-ntp-client-server-arduino/
 * https://hackmd.io/@fablabbcn/rydUz5cqv

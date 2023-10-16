@@ -63,6 +63,17 @@ Como el objetivo es que el ESP32 reciba comandos para encender y apagar el Led, 
 
 6. **Código**:
 
+**Archivo de configuración**: platformio.ini
+
+```ini
+[env:nodemcu-32s]
+platform = espressif32
+board = nodemcu-32s
+framework = arduino
+lib_deps = 
+	knolleary/PubSubClient@^2.8
+```
+
 **Header**: config.h
 
 ```h

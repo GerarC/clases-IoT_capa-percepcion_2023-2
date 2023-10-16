@@ -318,6 +318,19 @@ Supongamos que se nos da el siguiente problema: Se desea implementar un programa
 
 A continuación, se muestra el código asociado a la implementación para el ESP32:
 
+**Archivo de configuración**: platformio.ini
+
+```ini
+[env:nodemcu-32s]
+platform = espressif32
+board = nodemcu-32s
+framework = arduino
+lib_deps = 
+	knolleary/PubSubClient@^2.8
+```
+
+**Archivo principal**: main.cpp
+
 ```cpp
 #include <Arduino.h>
 #include <Wifi.h>
@@ -533,7 +546,8 @@ Hagalo usted mismo replicando el proceso anteriormente mostrado. Para ello desca
 
 A continuación se muestran algunos ejemplos adicionales en los cuales se usa el protocolo MQTT.
 1. **Ejemplo 1**: Encendido y apagado de una lampara empleando el protocolo MQTT. ([link](ejemplo1/README.md))
-2. **Ejemplo 2**: Comunicación entre dos...
+2. **Ejemplo 2**: Comunicación entre dos cosas para la implementación de una alarma remota. ([link](ejemplo2/README.md))
+3. **Ejemplo 3**: En construcción... ([link](ejemplo3/README.md))
 
 > **Nota**
 > Todo esto, aun se encuentra en construcción. Disculpas por las molestias causadas...
