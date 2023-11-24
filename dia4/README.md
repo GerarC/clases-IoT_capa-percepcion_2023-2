@@ -161,7 +161,8 @@ Para comprender esto en el siguiente [directorio](serial-esp32/) explicara paso 
 
 1. Analizar como se lleva a cabo el procedimiento de descargar una aplicación usando **Platformio**. ([link](uso_platformio/README.md)) 
 2. Estudiar y comprender como se lleva a cabo el proceso de debug mediante el puerto serial ([link](debug_esp32/README.md)).
-3. Estudiar y replicar el proceso que se lleva a cabo para diseñar una aplicación que conecte un computador con el puerto serial ([link](serial-esp32/README.md)).
+3. Estudiar y replicar el proceso que se lleva a cabo para diseñar una aplicación que conecte un computador con el puerto serial ([link](serial-esp32-platformio/README.md)).
+
 
 
 ## Para conocer mas
