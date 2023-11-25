@@ -1,16 +1,12 @@
 #Python
-from typing import Optional
-from enum import Enum
 import serial
 import serial.tools.list_ports
 
 #Pydantic
-from pydantic import BaseModel
 from pydantic import Field
 
 #FastAPI
 from fastapi import FastAPI
-from fastapi import Body, Query, Path
 
 app = FastAPI()
 app.serial = None
@@ -30,11 +26,11 @@ async def listPorts():
 @app.get("/connect/{port_id}")
 async def connect(port_id): 
     print("Iniciando conexión...")
-    app.serial = serial.Serial(port_id,115200)
+    app.serial = serial.Serial(port_id,9600)
     if app.serial == None:
         return {"Connection": "Fail"}
     else:
-        return {"Connection": "Open"}
+        return {"Connection": "Open", }
 
 @app.get("/disconnect")
 async def disconnect():
@@ -43,10 +39,10 @@ async def disconnect():
 
 @app.get("/on")
 async def led_on():
-    app.serial.write('h'.encode())
+    app.serial.write(b'h')
     return {"led":"on"}
 
 @app.get("/off")
 async def led_off():
-    app.serial.write('l'.encode())
+    app.serial.write(b'l')
     return {"led":"off"}
