@@ -142,6 +142,15 @@ A continuación se muestra el resultado de la aplicacion de cada uno de los endp
   ![ej9](ejemplo4_9.png)
 
 
+## Actividad
+
+1. Haga una copia del archivo ```api_serialLed_esp32.py``` y guardela como ```api_serialLed_esp32-v2.py``` 
+2. Modifique el archivo ```api_serialLed_esp32-v2.py``` de tal manera que mejore las peticiones para hacer mas generica la aplicacion. 
+   - [ ] Hacer que la velocidad del puerto sea configurable.
+   - [ ] Cualquier otra peticion que se le ocurra
+
+**Nota**: Si ve necesario la modificación del archivo que se ejecuta en la placa base empleada con el fin de hacerlo compatible con las peticiones del archivo python ```api_serialLed_esp32-v2.py``` hagalo.
+
 ## Referencias
 
 1. https://fastapi.tiangolo.com/
