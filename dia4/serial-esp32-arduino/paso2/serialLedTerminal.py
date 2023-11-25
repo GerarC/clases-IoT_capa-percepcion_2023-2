@@ -1,6 +1,6 @@
 import serial
 
-ser = serial.Serial(port='COM7', baudrate=9200, timeout=.1)
+ser = serial.Serial(port='COM7', baudrate=9600, timeout=.1)
 
 def menu():
     print("Menu de control de la office " )

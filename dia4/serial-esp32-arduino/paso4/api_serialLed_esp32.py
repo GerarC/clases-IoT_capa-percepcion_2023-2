@@ -36,7 +36,7 @@ def listPorts():
 @app.get("/connect/{port_id}")
 def connect(port_id): 
     print("Iniciando conexión...")
-    app.serial = serial.Serial(port_id,115200)
+    app.serial = serial.Serial(port_id,9600)
     if app.serial == None:
         return {"Connection": "Fail"}
     else:
@@ -49,16 +49,11 @@ def disconnect():
 
 @app.get("/on")
 def led_on():
-    #app.serial.flush()
-    #app.serial.write(b'1')
     app.serial.write("H".encode())
-    #app.serial.write(bytes(b'H'))
     return {"led":"on"}
 
 @app.get("/off")
 def led_off():
     #app.serial.flush()
     app.serial.write("L".encode())
-    #app.serial.write(b'0')
-    #app.serial.write(bytes(b'L'))
     return {"led":"off"}

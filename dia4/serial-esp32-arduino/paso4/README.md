@@ -64,7 +64,7 @@ async def listPorts():
 @app.get("/connect/{port_id}")
 async def connect(port_id): 
     print("Iniciando conexión...")
-    app.serial = serial.Serial(port_id,115200)
+    app.serial = serial.Serial(port_id,9600)
     if app.serial == None:
         return {"Connection": "Fail"}
     else:
@@ -108,7 +108,7 @@ Para el resto de las pruebas basta con poner en la URL del navegados cualquiera 
 
 ## Importante
 
-**Este programa aun tiene bugs**
+**Bugs**: Parece que ya se cuadro el problema. Falta verificar.
 
 ## Referencias
 
