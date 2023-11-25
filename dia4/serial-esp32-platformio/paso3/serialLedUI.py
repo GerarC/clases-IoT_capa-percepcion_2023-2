@@ -26,7 +26,7 @@ class MainApp(App):
     def build(self):
         self.conect_status = False
         self.PORT = self.listPorts()[0]
-        self.ser = serial.Serial(port=self.PORT, baudrate=9200, timeout=.1)
+        self.ser = serial.Serial(port=self.PORT, baudrate=9600, timeout=.1)
         self.ser.close() 
         
         main_layout = BoxLayout(orientation="vertical")
