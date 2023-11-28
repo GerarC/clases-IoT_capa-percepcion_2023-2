@@ -5,12 +5,16 @@
 
 |HTTP method | API endpoint |Descrición|
 |---|---|---|
-|```GET``` | ```/ports``` |	Obtiene una lista de puertos |
-|```GET``` | ```/connect/<port_id>``` |	Conecta la aplicación al puerto serial elegido |
-|```GET``` | ```/disconnect``` | Desconecta la aplicación del puerto serial |
-|```GET``` | ```/on``` | Enciende el led (Una vez la aplicación se ha conectado) |
-|```GET``` | ```/off``` | Apaga el led (Una vez la aplicación se ha desconectado) |
+|```GET``` | ```/home``` |	Obtiene una lista de puertos |
+|```GET``` | ```/control``` |	Donde se encuentra el control |
+|```GET``` | ```/disconnect``` | Desconecta la aplicación del puerto serial (Falta poner este endpoint) |
+|```GET``` | ```/led_change``` | Enciende el led (Una vez la aplicación se ha conectado) |
 
+1. Cambio entre las partes de la interfaz
+2. Integración con la parte donde se conecta serialmente la cosa
+3. Colocando mas amigable la interfaz
+
+## Enlaces
 
 * https://dweet.io/follow/ubiquitous-pear
 * https://nodered.org/docs/user-guide/messages
