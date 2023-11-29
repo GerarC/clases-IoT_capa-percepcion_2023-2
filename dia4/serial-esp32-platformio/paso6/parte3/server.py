@@ -9,14 +9,14 @@ import os
 import serial
 import serial.tools.list_ports
 
-app = FastAPI()
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+
+app = FastAPI()
 app.led_status = False
 app.port = None
 app.serial = None
 
-
+app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 """

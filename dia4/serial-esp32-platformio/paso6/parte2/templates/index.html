@@ -11,6 +11,7 @@
 <body>
     <h1> Control LED </h1>
     <form action="control" id="port_form">
+        <label for="port_select">Puerto: </label>
         <select id="port_select" name="port">
             {% for puerto in puertos %}
             <option value="{{ puerto }}">{{ puerto }}</option>
