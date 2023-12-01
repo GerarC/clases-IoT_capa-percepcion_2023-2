@@ -8,9 +8,6 @@ import os
 
 import serial
 import serial.tools.list_ports
-
-
-
 app = FastAPI()
 app.led_status = False
 app.port = None
