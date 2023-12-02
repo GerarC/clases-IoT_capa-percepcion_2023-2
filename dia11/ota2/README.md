@@ -133,3 +133,15 @@ void loop(void) {
   ElegantOTA.loop();
 }
 ```
+
+## Otras referencias
+
+* https://docs.arduino.cc/arduino-cloud/features/ota-getting-started
+  * https://www.youtube.com/watch?v=2Bwyb1ReHUU
+* https://www.laboratoriogluon.com/ejemplo-basico-esp32-ota-esp-idf-y-platformio/
+* https://blog.arduino.cc/2023/01/24/update-your-esp32-boards-over-the-air-ota-with-arduino-cloud/
+* https://thingsboard.io/docs/samples/esp32/ota/
+
+Esta es otra forma:
+
+* https://www.programmingelectronics.com/arduinoota/ 
