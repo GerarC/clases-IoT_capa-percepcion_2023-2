@@ -29,7 +29,9 @@ Luego, lo que hacemos es verificar que el servidor **AsyncElegantOTA** este en f
 
 Ahora, vamos a proceder a codificar el programa de prueba en el IDE de Arduino como siempre se hace. 
 
-1. Codificar el programa. En nuestro caso creamos el ejemplo del parpadeo cuyo codigo se muestra a continuación:
+1. Codificar el programa adaptandolo de modo que se pueda descargar a traves de OTA.
+   
+   Por ejemplo, el codigo del programa que permite el parpadeo del ESP32 y que se descarga a traves del IDE, se muestra a continuación:
     
     ```ino
     // the setup function runs once when you press reset or power the board
@@ -47,7 +49,64 @@ Ahora, vamos a proceder a codificar el programa de prueba en el IDE de Arduino c
     }
     ```
 
-   Para el caso el programa se guardo como **test-blink**: 
+    Para que este programa se pueda descargar a traves del servidor OTA, se debe reescribir tal y como se muestra a continuación:
+
+    ```ino
+    #if defined(ESP8266)
+      #include <ESP8266WiFi.h>
+      #include <ESPAsyncTCP.h>
+    #elif defined(ESP32)
+      #include <WiFi.h>
+      #include <AsyncTCP.h>
+    #endif
+    
+    #include <ESPAsyncWebServer.h>
+    #include <AsyncElegantOTA.h>
+    
+    const char* ssid = "Alberto";
+    const char* password = "22181224";
+    
+    AsyncWebServer server(80);
+    
+    // the setup function runs once when you press reset or power the board
+    void setup() {
+      // initialize digital pin LED_BUILTIN as an output.
+      pinMode(LED_BUILTIN, OUTPUT);
+      Serial.begin(115200);  
+    
+      // Connect to Wi-Fi
+      WiFi.begin(ssid, password);
+      while (WiFi.status() != WL_CONNECTED) {
+        delay(1000);
+        Serial.println("Connecting to WiFi..");
+      }
+    
+      // Print ESP Local IP Address
+      Serial.println("");
+      Serial.print("Connected to ");
+      Serial.println(ssid);
+      Serial.print("IP address: ");
+      Serial.println(WiFi.localIP());
+      
+      server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
+        request->send(200, "text/plain", "Hi! This is a sample response.");
+      });
+    
+      AsyncElegantOTA.begin(&server);    // Start AsyncElegantOTA
+      server.begin();
+      Serial.println("HTTP server started");
+    }
+    
+    // the loop function runs over and over again forever
+    void loop() {
+      digitalWrite(LED_BUILTIN, HIGH);  // turn the LED on (HIGH is the voltage level)
+      delay(1000);                      // wait for a second
+      digitalWrite(LED_BUILTIN, LOW);   // turn the LED off by making the voltage LOW
+      delay(1000);                      // wait for a second
+    }    
+    ```
+
+   Notese, que el programa es practicamente el mismo solo que se le agrego la parte del servidor OTA. Para el caso el programa se guardo como **test-blink**: 
 
    ![5](test-blink.png)
 
