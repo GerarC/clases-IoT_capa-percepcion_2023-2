@@ -4,6 +4,7 @@
 * https://registry.platformio.org/libraries/ayushsharma82/ElegantOTA
 * https://microcontrollerslab.com/esp32-ota-over-the-air-updates-vs-code-platformio-ide/
 
+Para configurar el .ini, se siguio el siguiente ejemplo: https://docs.elegantota.pro/async-mode/
 
 
 ```ini
@@ -26,7 +27,7 @@ Ademas:
 
 https://github.com/me-no-dev/ESPAsyncWebServer#using-platformio
 
-Ejemplo:
+Ejemplo: 
 
 ```cpp
 #include <Arduino.h>
