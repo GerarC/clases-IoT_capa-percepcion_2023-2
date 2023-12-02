@@ -35,6 +35,8 @@
 #include <ESPAsyncWebServer.h>
 #include <ElegantOTA.h>
 
+int led_state;
+
 const char* ssid = "Alberto";
 const char* password = "22181224";
 
@@ -46,6 +48,10 @@ void onOTAStart() {
   // Log when OTA has started
   Serial.println("OTA update started!");
   // <Add your own code here>
+
+  // Initialize digital pin LED_BUILTIN as an output.
+  pinMode(LED_BUILTIN, OUTPUT);
+  led_state = LOW;
 }
 
 void onOTAProgress(size_t current, size_t final) {
@@ -67,9 +73,6 @@ void onOTAEnd(bool success) {
 }
 
 void setup(void) {
-  // Initialize digital pin LED_BUILTIN as an output.
-  pinMode(LED_BUILTIN, OUTPUT);
-  
   // Config conection
   Serial.begin(115200);
   WiFi.mode(WIFI_STA);
@@ -104,8 +107,7 @@ void setup(void) {
 void loop(void) {
   ElegantOTA.loop();
   // Blink led
-  digitalWrite(LED_BUILTIN, HIGH);  // turn the LED on (HIGH is the voltage level)
   delay(1000);                      // wait for a second
-  digitalWrite(LED_BUILTIN, LOW);   // turn the LED off by making the voltage LOW
-  delay(1000);                      // wait for a second
+  digitalWrite(LED_BUILTIN, led_state); 
+  led_state = !led_state;  
 }
