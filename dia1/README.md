@@ -35,7 +35,7 @@ Esta parte tomara como referencia el material del siguiente [link](https://githu
 
 ![arduino-uno](uno-r3.jpg)
 
-Las principales caracteristicas del Arduino se resumen en la siguiente tabla:
+Las principales caracteristicas del Arduino UNO se resumen en la siguiente tabla:
 
 |Item |Arduino UNO|
 |---|---|
@@ -67,6 +67,8 @@ Para mas informacion ver el siguiente [link](https://udea-iot.gitbook.io/introdu
 
 ![esp-8266](NodeMcuV3_1.jpg)
 
+La siguiente tabla resume las especificaciones tecnicas del ESP-8266:
+
 |Item |ESP8266|
 |---|---|
 |Microcontrolador |SoC ESP9266EX|
@@ -97,6 +99,8 @@ Para mas informacion ver el siguiente [link](https://udea-iot.gitbook.io/introdu
 
 ![esp32](esp32.png)
 
+La siguiente tabla resume las especificaciones tecnicas del ESP32:
+
 |Item |ESP32|
 |---|---|
 |Microcontrolador |SoC ESP32|
@@ -123,6 +127,44 @@ Para mas informacion ver el siguiente [link](https://udea-iot.gitbook.io/introdu
 
 Para mas informacion ver el siguiente [link](https://udea-iot.gitbook.io/introduccion-al-iot/primeros-pasos/placas-de-desarrollo/esp32)
 
+**ARDUINO NANO 33 BLE Sense Lite**
+
+El Arduino Nano 33 BLE Sense ([datasheet](https://docs.arduino.cc/resources/datasheets/ABX00031-datasheet.pdf)) esta basado en el microcontrolador nRF52840 ([datasheet](https://content.arduino.cc/assets/Nano_BLE_MCU-nRF52840_PS_v1.1.pdf))
+
+![arduino_nano33_ble](arduino_nano33_ble.jpg)
+
+La siguiente tabla resume las especificaciones tecnicas del Arduino Nano 33 BLE Sense:
+
+|Item |Arduino Nano 33 BLE Sense|
+|---|---|
+|Microcontrolador|	nRF52840 ([datasheet](https://content.arduino.cc/assets/Nano_BLE_MCU-nRF52840_PS_v1.1.pdf))|
+|Operating Voltage|	3.3V|
+|Input Voltage (limit)|	21V|
+|DC Current per I/O Pin|	15 mA|
+|Clock Speed	|64MHz|
+|CPU Flash Memory	1MB |(nRF52840)|
+|SRAM|	256KB (nRF52840)|
+|EEPROM|	none|
+|Digital Input / Output Pins|	14|
+|PWM Pins|	all digital pins|
+|UART|	1|
+|SPI|	1|
+|I2C|	1|
+|Analog Input Pins|	8 (ADC 12 bit 200 ksamples)|
+|Analog Output Pins|	Only through PWM (no DAC)|
+|External Interrupts	|all digital pins|
+|LED_BUILTIN|	13|
+|USB	|Native in the nRF52840 Processor|
+|IMU|	LSM9DS1 ([datasheet](https://content.arduino.cc/assets/Nano_BLE_Sense_lsm9ds1.pdf))|
+|Microphone|	MP34DT05 ([datasheet](https://content.arduino.cc/assets/Nano_BLE_Sense_mp34dt05-a.pdf))|
+|Gesture, light, proximity|	APDS9960 ([datasheet](https://content.arduino.cc/assets/Nano_BLE_Sense_av02-4191en_ds_apds-9960.pdf))|
+|Barometric pressure	|LPS22HB ([datasheet](https://content.arduino.cc/assets/Nano_BLE_Sense_lps22hb.pdf))|
+|Temperature, humidity|	HTS221 ([datasheet](https://content.arduino.cc/assets/Nano_BLE_Sense_HTS221.pdf))|
+|Tamaño (length × width) |45 mm × 18 mm|
+
+A diferencia de los otros sistemas disponibles en el laboratorio, el Arduino Nano 33 BLE Sense tiene algunos sensores integrados que pueden ser usados para soluciones IoT.
+
+> **Importante**: Hay diferentes versiones del Arduino Nano 33 BLE Sense (conocidas como "revisions": NANO 33 BLE SENSE y NANO 33 BLE SENSE REV2). En ambas se usa el nRF52840 como procesador, pero los sensores son diferentes. Por lo tanto, es importante tener cuidado al elegir la versión correcta con la tarjeta con la que se va a trabajar en el Arduino IDE.
 
 ### 4. Sobre los componentes
 
@@ -185,3 +227,14 @@ En el caso colombiano, la siguiente lista (tomada del foro **Listado de proveedo
    |2| Smart Scent ([link](smart-scent/README.md))|
    |3| Luft Scntry ([link](luft-sentry/README.md))|
    |4| Sistemas de automatizado de una cava de vino ([link](cava-vino/README.md))|
+
+## Referencias
+
+### Arduino Nano BLE Sense
+
+* https://docs.arduino.cc/hardware/nano-33-ble-sense
+* https://edgeimpulse.com/blog/announcing-support-for-the-arduino-tiny-machine-learning-kit
+* https://store-usa.arduino.cc/products/arduino-tiny-machine-learning-kit?selectedStore=us
+* https://www.edx.org/es/certificates/professional-certificate/harvardx-tiny-machine-learning
+* https://www.datacamp.com/blog/what-is-tinyml-tiny-machine-learning
+* https://docs.edgeimpulse.com/docs/development-platforms/officially-supported-mcu-targets/arduino-nano-33-ble-sense
