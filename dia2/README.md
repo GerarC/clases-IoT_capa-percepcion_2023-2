@@ -19,6 +19,7 @@ En el laboratorio hay un gran numero de elementos para prototipado. En la siguie
 |Arduino Uno|Placa de desarrollo Arduino Uno ([link](https://docs.arduino.cc/hardware/uno-rev3))|
 |Tarjeta de desarrollo ESP8266 NodeMCU WiFi Devkit|Tarjeta de desarrollo basada en ESP8266 ([link](NodeMCU-V3.pdf))|
 |Tarjeta de desarrollo NodeMCU-32S| Tarjeda de desarrollo basada en el ESP-32S ([link](nodemcu-32s_product_specification.pdf))
+|Arduino Nano 33 BLE Sense ***Lite***|Tarjeta de desarrollo Arduino Nano 33 BLE Sense ***Lite*** ([link](https://docs.arduino.cc/hardware/nano-33-ble-sense)). **Importante**: Tenga en cuenta la información dada en el siguiente [foro](https://forum.arduino.cc/t/a-difference-between-a-n-33-ble-sense-vs-sense-lite/1030305/3) |
 
 ### Kit de sensores
 
@@ -28,6 +29,7 @@ En el laboratorio hay un gran numero de elementos para prototipado. En la siguie
 |37 sensor kit Elegoo| Kit de sensores Elegoo para prototipado rapido ([link](http://spot.pcc.edu/~dgoldman/labs/37SENSORKIT.pdf))|
 |AlphaBot2 robot building kit for Arduino/Pi/PiZero| Kit para prototipado de robots AlphaBot2 ([link](https://www.waveshare.com/wiki/AlphaBot2))|
 |Landzo 37 In 1 Sensors Kit For Arduino|Kit de sensores Landzo para prototipado ([link](https://www.instructables.com/Arduino-37-in-1-Sensors-Kit-Explained/))
+|Tiny Machine Learning Kit|Tiny Machine Learning Kit [[Manual de usuario]](https://tinyml.seas.harvard.edu/assets/other/4D/22.03.11_Marcelo_Rovai_Handout.pdf) [[link1]](https://store-usa.arduino.cc/products/arduino-tiny-machine-learning-kit?queryID=undefined&selectedStore=us) [[link2]](https://www.farnell.com/datasheets/3295973.pdf)|
 
 ## Placas de desarrollo a estudiar
 
@@ -78,6 +80,12 @@ La siguiente tabla resume la función principal algunos de estos:
 |Digital SPI|```P23 [MOSI]```, ```P19 [MISO]```, ```P18 [SCK]```, ```P5 [SS]```|
 |Flash SPI|```CLK [GPIO6/FLASHCLK]```, ```SD0 [GPIO7/FLASHD0]```, <br>```SD1 [GPIO7/FLASHD1]```, ```CMD [GPIO7/FLASHCMD]```,<br> ```SD2 [GPIO9/FLASHD2]```, ```SD3 [GPIO9/FLASHD3]```|
 |Capacitive touch|```P0 [GPIO4]/TOUCH1```, ``` P4 [GPIO0]/TOUCH0```, <br>``` P2 [GPIO2/TOUCH2]```, ``` P15 [GPIO15/TOUCH3]```, <br>``` P13 [GPIO13/TOUCH4]```, ``` P12 [GPIO12/TOUCH5]```,<br> ``` P14 [GPIO14/TOUCH6]```, ``` P27 [GPIO7/TOUCH7]```|
+
+### Placa Arduino Nano 33 BLE Sense
+
+En construcción...
+
+![arduino_nano33-pinout](arduino_nano33-pin.png)
 
 ## Sensores y actuadores
 
@@ -307,5 +315,5 @@ Para profundizar un poco mas en la teoria sobre algunos de los diferentes tipos 
 * https://makeabilitylab.github.io/physcomp/
 * https://vimeo.com/channels/pcomp
 * https://web.stanford.edu/class/archive/engr/engr40m.1178/
-
-
+* https://docs.arduino.cc/tutorials/nano-33-ble-sense/get-started-with-machine-learning
+* 
