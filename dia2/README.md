@@ -83,9 +83,22 @@ La siguiente tabla resume la función principal algunos de estos:
 
 ### Placa Arduino Nano 33 BLE Sense
 
-En construcción...
+En construcción... [datasheet](https://docs.arduino.cc/resources/datasheets/ABX00031-datasheet.pdf)
 
 ![arduino_nano33-pinout](arduino_nano33-pin.png)
+
+La siguiente tabla resume la función principal algunos de los pines de la placa Arduino Nano 33 BLE Sense:
+
+|Tipo|Notación pines (placa)|
+|---|---|
+|Digital/GPIO|```~D2```, ```~D3```, ```~D4```, ```~D5```, ```~D6```, ```~D7```, ```~D8```, <br> ```~D9```, ```~D10```, ```~D11```, ```~D12```, ```~D13```|
+|Analog in|```A0```, ```A1```, ```A2```, ```A3```, ```A4```, ```A5```, ```A6```, ```A7```|
+|PWM|```~D2```, ```~D3```, ```~D4```, ```~D5```, ```~D6```, ```~D7```, ```~D8```, <br> ```~D9```, ```~D10```, ```~D11```, ```~D12```, ```~D13```|
+|Serial (UART)|```Tx```, ```Rx```|
+|I2C|```A4/SDA```, ```A5/SCL```|
+|Digital SPI|```~D11/MOSI```, ```D12/MISO```|
+|Interrupt|Todos los pines digitales|
+
 
 ## Sensores y actuadores
 
@@ -95,8 +108,8 @@ Los sensores y actuadores tienen como papel principal  permitir la interación d
 
 Existen diferentes tipos de sensores que permiten medir diferentes variables, desde propiedades naturales tales como la temperatura del aire a interacciones fisicas como el movimiento.
 Algunos tipos de sensores existentes son:
-* **Sensores de temperatura**: Permiten medir la temperatura del aire o el medio en el cual se encuentran inmersos. A veces suelen venir cominados con sensores de humedad y presión en un mismo modulo.
-* **Botones**: Permiten sensar cuando estos son presionados
+* **Sensores de temperatura**: Permiten medir la temperatura del aire o el medio en el cual se encuentran inmersos. A veces suelen venir combinados con sensores de humedad y presión en un mismo modulo.
+* **Botones**: Permiten sensar cuando estos son presionados.
 * **Sensores de luz**: Estos detectan niveles de luz. Tambien permiten medir distintos tipos de luz (de colores especificos, ultravioleta, infraroja o luz visible en general).
 * **Acelerometros**: Permiten medir el movimiento en multiples direcciones.
 * **Microfonos**: estos permiten detectar sonidos.
@@ -113,7 +126,6 @@ De acuerdo al tipo de señal entregada, los sensores se pueden clasificar en dos
   ![sensor_analogo](https://github.com/microsoft/IoT-For-Beginners/raw/main/images/potentiometer.png)
 
   Debido a que los dispositivos IoT son digitales, los valores obtenidos al usar sensores analogos deben ser convertidos a una señal digital antes de ser procesados de modo que muchos dispositivos IoT tienen Conversores analogo a digital (ADCs) para convertir señales analogas a representaciones digitales de su valor.
-
 
 * **Sensores Digitales**: Los sensores digitales detectan cambios de voltaje que solo pueden tomar dos posibles valores (alto y bajo).
   
@@ -187,6 +199,17 @@ La siguiente tabla muestra cada uno de los modulos del kit:
 |Sensor|<li> KY-023 Joystick module <li> KY-026 Flame Sensor Module <li> KY-039 Heartbeat Sensor module <li> KY-027 2PCS Light Cup module <li> KY-003 Hall Magnetic Sensor <li> KY-024 Linear Hall Sensor <li> KY-017 Mercury Tilt Switch <li> KY-001 18B20 Temperature Sensor <li> KY-037 Big Sound Sensor <li> KY-036 Touch Sensor <li> KY-020 Ball Switch <li> KY-013 Analog Temperature Sensor <li> KY-038 Small Sound Sensor <li> KY-028 Digital Temperature Sensor <li> KY-004 Button <li> KY-018 Photoresistor <li> KY-033 Tracking Sensor <li> KY-025 Reed Switch <li> KY-002 Shock Sensor <li> KY-015 Temperature and Humidity Sensor <li> KY-022 IR Receiver <li> KY-032 Avoidance Sensor <li> KY-021 Mini Reed Switch <li> KY-040 Rotary Encoder <li> KY-035 Analog Hall Sensor <li> KY-031 - Tap Module <li> KY-010 - Light blocking|
 |Actuador|<li> KY-016 RGB LED Module <li> KY-019 Relay Module <li> KY-009 SMD RGB LED <li> KY-034 7 Color Flash LED <li> KY-011 Two Color LED <li> KY-008 Laser Emitter <li> KY-029 Mini Two-color LED <li> KY-005 IR Emitter <li> KY-012 Buzzer <li> KY-006 Passive Buzzer|
 
+**Tiny Machine Learning Kit**
+
+![tinyml-kit](tinyml-kit.jpg)
+
+La siguiente tabla muestra cada uno de los modulos del Kit:
+
+|Tipo|Modulos|
+|---|---|
+|Sensor|**Integrados en la placa Arduino Nano 33 BLE Sense Lite**<li> Sensor IMU LSM9DS1 [[Datasheet]](https://content.arduino.cc/assets/Nano_BLE_Sense_lsm9ds1.pdf) <li> Micrófono MP34DT05 [[Datasheet]](https://content.arduino.cc/assets/Nano_BLE_Sense_mp34dt05-a.pdf) <li>Sensor de gestos, luz, proximidad APDS9960 [[Datasheet]](https://content.arduino.cc/assets/Nano_BLE_Sense_av02-4191en_ds_apds-9960.pdf) <li> Sensor de presión barométrica LPS22HB [[Datasheet]](https://content.arduino.cc/assets/Nano_BLE_Sense_lps22hb.pdf) <br> **Externos** <li> OV7675 Camera module [[link]](https://docs.arducam.com/) [[repo]](https://github.com/ArduCAM/Arduino)|
+|Actuadores|---|
+|Tarjetas de expancion|<li> Arduino Tiny Machine Learning Shield|
 
 ## Prototipado básico usando fritzing
 
@@ -205,7 +228,8 @@ La siguiente tabla muestra enlaces de algunos fabricantes que poseen librerias e
 |Seeed Studio||https://github.com/Seeed-Studio/fritzing_parts|[seeed_fritzing_parts.fzbz](https://github.com/Seeed-Studio/fritzing_parts/blob/master/seeed_fritzing_parts.fzbz)|
 |Elegoo||https://github.com/marcinwisniowski/ElegooFritzingBin|[Elegoo-0.6.3.fzbz](https://github.com/marcinwisniowski/ElegooFritzingBin/releases/download/0.6.3/Elegoo-0.6.3.fzbz)|
 |NodeMCU y otros componentes||https://github.com/AchimPieters/Fritzing-Custom-Parts|[](https://github.com/AchimPieters/Fritzing-Custom-Parts/releases/download/0.0.4/Fritzing.parts.rar)|
-|ESP32 NodeMCU|<li>**ESP32S-HiLetgo Dev Boad with Pinout Template**<li> ([link](https://forum.fritzing.org/t/esp32s-hiletgo-dev-boad-with-pinout-template/5357))||[ESP32S_HiLetgo.fzpz](https://forum.fritzing.org/uploads/default/original/2X/1/1c6c1b0e5bff03730a40b696b354783432fbb506.fzpz)|
+|ESP32 NodeMCU|<li>**ESP32S-HiLetgo Dev Boad with Pinout Template** ([link](https://forum.fritzing.org/t/esp32s-hiletgo-dev-boad-with-pinout-template/5357))||[ESP32S_HiLetgo.fzpz](https://forum.fritzing.org/uploads/default/original/2X/1/1c6c1b0e5bff03730a40b696b354783432fbb506.fzpz)|
+|Arduino Nano|<li>**Arduino Nano 33 BLE Sense** ([link](https://store-usa.arduino.cc/products/arduino-nano-33-ble-sense))||[Arduino Nano 33 BLE Sense.fzpz](https://content.arduino.cc/assets/Arduino%20Nano%2033%20BLE%20Sense.fzpz)|
 
 ## Actividad de laboratorio
 
@@ -232,6 +256,7 @@ Teniendo en cuenta lo anterior:
    * https://www.seeedstudio.com/
    * https://www.luisllamas.es/
    * https://ubidots.com/
+   * https://www.wildernesslabs.co/
 
 <!--
 BOM templates
@@ -316,4 +341,7 @@ Para profundizar un poco mas en la teoria sobre algunos de los diferentes tipos 
 * https://vimeo.com/channels/pcomp
 * https://web.stanford.edu/class/archive/engr/engr40m.1178/
 * https://docs.arduino.cc/tutorials/nano-33-ble-sense/get-started-with-machine-learning
-* 
+* https://dotnet.microsoft.com/en-us/learn/iot
+* https://github.com/MicrosoftDocs/dotnet-iot-assets/tree/main
+* https://github.com/noopkat/iotcore-smart-device
+* https://store-usa.arduino.cc/collections/internet-of-things
