@@ -345,3 +345,4 @@ Para profundizar un poco mas en la teoria sobre algunos de los diferentes tipos 
 * https://github.com/MicrosoftDocs/dotnet-iot-assets/tree/main
 * https://github.com/noopkat/iotcore-smart-device
 * https://store-usa.arduino.cc/collections/internet-of-things
+* https://www.wildernesslabs.co/
